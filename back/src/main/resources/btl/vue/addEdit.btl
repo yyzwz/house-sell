@@ -1,0 +1,542 @@
+<template>
+  <div>
+    <!-- Drawer抽屉 -->
+    <Drawer :title="title" v-model="visible" width="${modalWidth}" draggable :mask-closable="type=='0'">
+      <div :style="{maxHeight: maxHeight}" class="drawer-content">
+        <Form ref="form" :model="form" :rules="formValidate" <% if(labelPosition=="left"){ %>:label-width="100"<% } %> label-position="${labelPosition}">
+          <%
+          var curr = 1;
+          for(var i=0; i<totalRow; i++){
+          %>
+          <% if(labelPosition!="left"){ %>
+          <Row :gutter="32">
+          <% } %>
+            <%
+            for(var j=0; j<rowNum; j++){
+            if(fields.~size==0||curr>fields.~size){
+                break;
+            }
+            var item = fields[curr-1];
+            while(!item.editable && curr <= fields.~size){
+                curr++;
+                item = fields[curr-1];
+            }
+            curr++;
+            var spanData = span;
+            if(item.type=="editor"||item.type=="textarea"){
+                spanData = 24;
+            }
+            %>
+            <% if(labelPosition!="left"){ %>
+            <Col span="${spanData}">
+            <% } %>
+              <FormItem label="${item.name}" prop="${item.field}" <% if(item.type=="upload"){ %>class="form-noheight"<% } %>>
+                <%
+                if(item.type=="text"){
+                %>
+                <Input v-model="form.${item.field}" clearable/>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="textarea"){
+                %>
+                <Input v-model="form.${item.field}" type="textarea" :rows="4" maxlength="250" show-word-limit/>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="select"){
+                %>
+                <Select v-model="form.${item.field}" clearable transfer>
+                  <Option value="0">请自行编辑下拉菜单</Option>
+                </Select>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="switch"){
+                %>
+                <i-switch v-model="form.${item.field}"></i-switch>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="radio"){
+                %>
+                <RadioGroup v-model="form.${item.field}">
+                  <Radio label="0">请自行编辑单选框</Radio>
+                  <Radio label="1">请自行编辑单选框</Radio>
+                </RadioGroup>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="number"){
+                %>
+                <InputNumber v-model="form.${item.field}" style="width:100%"></InputNumber>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="date"){
+                %>
+                <DatePicker type="date" v-model="form.${item.field}" clearable transfer style="width: 100%"></DatePicker>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="datetime"){
+                %>
+                <DatePicker type="datetime" v-model="form.${item.field}" clearable transfer style="width: 100%"></DatePicker>
+                <%
+                }
+                %>
+                <%
+                  if(item.type=="daterange"){
+                %>
+                <DatePicker type="daterange" v-model="form.${item.field}" clearable transfer style="width: 100%"></DatePicker>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="time"){
+                %>
+                <TimePicker type="time" v-model="form.${item.field}" clearable transfer style="width: 100%"></TimePicker>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="area"){
+                %>
+                <al-cascader v-model="form.${item.field}" data-type="name" level="${item.level}" transfer/>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="slider"){
+                %>
+                <Slider v-model="form.${item.field}"></Slider>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="upload"){
+                %>
+                <upload-pic-input v-model="form.${item.field}"></upload-pic-input>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="uploadThumb"){
+                %>
+                <uploadThumb v-model="form.${item.field}" multiple></uploadThumb>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="editor"){
+                %>
+                <editor id="editor-${i}-${j}" v-model="form.${item.field}"></editor>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="password"){
+                %>
+                <password v-model="form.${item.field}"></password>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="dict"){
+                %>
+                <dict v-model="form.${item.field}" dict="${item.dictType}" transfer></dict>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="customList"){
+                %>
+                <customList v-model="form.${item.field}" url="${item.customUrl}" transfer></customList>
+                <%
+                }
+                %>
+                <%
+                if(item.type=="fileUpload"){
+                %>
+                <fileUpload v-model="form.${item.field}"></fileUpload>
+                <%
+                }
+                %>
+              </FormItem>
+            <% if(labelPosition!="left"){ %>
+            </Col>
+            <% } %>
+            <%
+            }
+            %>
+          <% if(labelPosition!="left"){ %>
+          </Row>
+          <% } %>
+          <%
+          }
+          %>
+        </Form>
+      </div>
+      <div class="drawer-footer br" v-show="type!='0'">
+        <Button type="primary" :loading="submitLoading" @click="submit">提交</Button>
+        <Button @click="visible = false">取消</Button>
+      </div>
+    </Drawer>
+  </div>
+</template>
+
+<script>
+<%
+if(api){
+%>
+// 根据你的实际请求api.js位置路径修改
+import { add${apiName}, edit${apiName} } from "@/api/index";
+<%
+}
+%>
+<%
+if(fileUpload){
+%>
+import fileUpload from "@/views/my-components/xboot/file-upload";
+<%
+}
+%>
+<%
+if(upload){
+%>
+import uploadPicInput from "@/views/my-components/xboot/upload-pic-input";
+<%
+}
+%>
+<%
+if(uploadThumb){
+%>
+import uploadThumb from "@/views/my-components/xboot/upload-pic-thumb";
+<%
+}
+%>
+<%
+if(editor){
+%>
+import editor from "@/views/my-components/xboot/editor";
+<%
+}
+%>
+<%
+if(password){
+%>
+import password from "@/views/my-components/xboot/set-password";
+<%
+}
+%>
+<%
+if(dict){
+%>
+import dict from "@/views/my-components/xboot/dict";
+<%
+}
+%>
+<%
+if(customList){
+%>
+import customList from "@/views/my-components/xboot/custom-list";
+<%
+}
+%>
+export default {
+  name: "addEdit",
+  components: {
+  <%
+  if(fileUpload){
+  %>
+    fileUpload,
+  <%
+  }
+  %>
+  <%
+  if(upload){
+  %>
+    uploadPicInput,
+  <%
+  }
+  %>
+  <%
+  if(uploadThumb){
+  %>
+    uploadThumb,
+  <%
+  }
+  %>
+  <%
+  if(editor){
+  %>
+    editor,
+  <%
+  }
+  %>
+  <%
+  if(password){
+  %>
+    password,
+  <%
+  }
+  %>
+  <%
+  if(dict){
+  %>
+    dict,
+  <%
+  }
+  %>
+  <%
+  if(customList){
+  %>
+    customList,
+  <%
+  }
+  %>
+  },
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    data: {
+      type: Object
+    },
+    type: {
+      type: String,
+      default: "0"
+    }
+  },
+  data() {
+    return {
+      visible: this.value,
+      title: "",
+      submitLoading: false,
+      maxHeight: 510,
+      form: { // 添加或编辑表单对象初始化数据
+        <%
+        for(item in fields){
+          if(item.editable){
+        %>
+        <% if(item.type=="switch"){ %>
+        ${item.field}: true,
+        <% }else if(item.type=="number"||item.type=="slider"){ %>
+        ${item.field}: 0,
+        <% }else if(item.type=="daterange"||item.type=="area"||item.type=="uploadThumb"){ %>
+        ${item.field}: [],
+        <% }else{ %>
+        ${item.field}: "",
+        <% } %>
+        <%
+          }
+        }
+        %>
+      },
+      // 表单验证规则
+      formValidate: {
+        <%
+        for(item in fields){
+          if(item.editable&&item.validate){
+        %>
+        <% if(item.type=="area"||item.type=="uploadThumb"){ %>
+        ${item.field}: [{ type: "array", required: true, message: "不能为空", trigger: "change" }],
+        <% }else if(item.type=="date"||item.type=="datetime"){ %>
+        ${item.field}: [{ type: "date", required: true, message: "不能为空", trigger: "change" }],
+        <% }else if(item.type=="daterange"){ %>
+        ${item.field}: [{ type: "array", required: true, trigger: "change", fields: { 0: { type: "date", message: "起始日期不能为空", required: true }, 1: { type: "date", message: "结束日期不能为空", required: true } }, }],
+        <% }else if(item.type=="number"||item.type=="slider"){ %>
+        ${item.field}: [{ type: "number", required: true, message: "不能为空", trigger: "change" }],
+        <% }else if(item.type=="switch"){ %>
+        ${item.field}: [{ type: "boolean", required: true, message: "不能为空", trigger: "change" }],
+        <% }else{ %>
+        ${item.field}: [{ required: true, message: "不能为空", trigger: "change" }],
+        <% } %>
+        <%
+          }
+        }
+        %>
+      }
+    };
+  },
+  methods: {
+    init() {
+    },
+    submit() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          <%
+          for(item in fields){
+            if(item.editable&&item.type=="date"){
+          %>
+          if (typeof this.form.${item.field} == "object") {
+            this.form.${item.field} = this.format(this.form.${item.field}, "yyyy-MM-dd");
+          }
+          <%
+          }else if(item.editable&&item.type=="datetime"){
+          %>
+          if (typeof this.form.${item.field} == "object") {
+            this.form.${item.field} = this.format(this.form.${item.field}, "yyyy-MM-dd HH:mm:ss");
+          }
+          <%
+            }
+          }
+          %>
+          if (this.type == "1") {
+            // 编辑
+            this.submitLoading = true;
+            <%
+            if(api){
+            %>
+            edit${apiName}(this.form).then(res => {
+              this.submitLoading = false;
+              if (res.success) {
+                this.$Message.success("操作成功");
+                this.$emit("on-submit", true);
+                this.visible = false;
+              }
+            });
+            <%
+            } else {
+            %>
+            // this.postRequest("请求路径", this.form).then(res => {
+            //   this.submitLoading = false;
+            //   if (res.success) {
+            //     this.$Message.success("操作成功");
+            //     this.$emit("on-submit", true);
+            //     this.visible = false;
+            //   }
+            // });
+            // 模拟请求
+            this.submitLoading = false;
+            this.$Message.success("操作成功");
+            this.$emit("on-submit", true);
+            this.visible = false;
+            <%
+            }
+            %>
+          } else {
+            // 添加
+            this.submitLoading = true;
+            <%
+            if(api){
+            %>
+            add${apiName}(this.form).then(res => {
+              this.submitLoading = false;
+              if (res.success) {
+                this.$Message.success("操作成功");
+                this.$emit("on-submit", true);
+                this.visible = false;
+              }
+            });
+            <%
+            } else {
+            %>
+            // this.postRequest("请求路径", this.form).then(res => {
+            //   this.submitLoading = false;
+            //   if (res.success) {
+            //     this.$Message.success("操作成功");
+            //     this.$emit("on-submit", true);
+            //     this.visible = false;
+            //   }
+            // });
+            // 模拟请求
+            this.submitLoading = false;
+            this.$Message.success("操作成功");
+            this.$emit("on-submit", true);
+            this.visible = false;
+            <%
+            }
+            %>
+          }
+        }
+      });
+    },
+    setCurrentValue(value) {
+      if (value === this.visible) {
+        return;
+      }
+      if (this.type == "1") {
+        this.title = "编辑";
+        this.maxHeight =
+          Number(document.documentElement.clientHeight - 121) + "px";
+      } else if (this.type == "2") {
+        this.title = "添加";
+        this.maxHeight =
+          Number(document.documentElement.clientHeight - 121) + "px";
+      } else {
+        this.title = "详细信息";
+        this.maxHeight = "100%";
+      }
+      // 清空数据
+      this.$refs.form.resetFields();
+      if (this.type == "0" || this.type == "1") {
+        // 回显数据处理
+        this.form = this.data;
+      } else {
+        // 添加
+        delete this.form.id;
+      }
+      this.visible = value;
+    }
+  },
+  watch: {
+    value(val) {
+      this.setCurrentValue(val);
+    },
+    visible(value) {
+      this.$emit("input", value);
+    }
+  },
+  mounted() {
+    this.init();
+  }
+};
+</script>
+
+<style lang="less">
+// 建议引入通用样式 具体路径自行修改 可删除下面样式代码
+// @import "@/styles/drawer-common.less";
+.drawer-footer {
+    z-index: 10;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-top: 1px solid #e8e8e8;
+    padding: 10px 16px;
+    text-align: left;
+    background: #fff;
+}
+
+.drawer-content {
+    overflow: auto;
+}
+
+.drawer-content::-webkit-scrollbar {
+    display: none;
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.drawer-title {
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+    display: block;
+    margin-bottom: 16px;
+}
+</style>
