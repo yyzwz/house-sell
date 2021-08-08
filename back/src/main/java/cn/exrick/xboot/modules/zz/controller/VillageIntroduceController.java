@@ -18,6 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -56,6 +61,9 @@ public class VillageIntroduceController {
         if(introduce.getTitle() != null && !NullUtils.isNull(introduce.getTitle())) {
             qw.like("title",introduce.getTitle());
         }
+        if(introduce.getAuditStatus() == 666) {
+            qw.eq("audit_status",1);
+        }
         IPage<VillageIntroduce> data = iVillageIntroduceService.page(PageUtil.initMpPage(page),qw);
         return new ResultUtil<IPage<VillageIntroduce>>().setData(data);
     }
@@ -83,10 +91,36 @@ public class VillageIntroduceController {
     @RequestMapping(value = "/delByIds", method = RequestMethod.POST)
     @ApiOperation(value = "批量通过id删除")
     public Result<Object> delAllByIds(@RequestParam String[] ids) {
-
         for (String id : ids) {
             iVillageIntroduceService.removeById(id);
         }
         return ResultUtil.success("批量通过id删除数据成功");
+    }
+
+    @RequestMapping(value = "/audit", method = RequestMethod.POST)
+    public Result<Object> audit(@RequestParam String id,@RequestParam int status) {
+        VillageIntroduce introduce = iVillageIntroduceService.getById(id);
+        if(introduce != null) {
+            introduce.setAuditStatus(status);
+            iVillageIntroduceService.saveOrUpdate(introduce);
+            return ResultUtil.success("OK");
+        }
+        return ResultUtil.error("NULL");
+    }
+
+    @RequestMapping(value = "/getHtmlPage", method = RequestMethod.GET)
+    @ApiOperation(value = "获取H5页面")
+    public void getHtmlPage(@RequestParam String id, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        VillageIntroduce introduce = iVillageIntroduceService.getById(id);
+        response.setContentType("text/html;charset=utf-8;pageEncoding=\"utf-8\"");
+        PrintWriter out = response.getWriter();
+        out.println("<h1 style=\"text-align: center;\">" + introduce.getTitle() + "</h1>");
+        out.println("");
+        out.println(introduce.getContent());
+        out.println("");
+        out.println("");
+        out.println("");
+        out.println("");
     }
 }

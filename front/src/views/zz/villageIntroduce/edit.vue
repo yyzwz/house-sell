@@ -18,12 +18,10 @@
               <FormItem label="标题" prop="title" >
                 <Input v-model="form.title" clearable/>
               </FormItem>
-              <FormItem label="内容" prop="content" >
-                <Input v-model="form.content" clearable/>
-              </FormItem>
               <FormItem label="类型" prop="type" >
                 <Select v-model="form.type" clearable>
-                  <Option value="0">请自行编辑下拉菜单</Option>
+                  <Option value="0">普通文章</Option>
+                  <Option value="1">外链文章</Option>
                 </Select>
               </FormItem>
               <FormItem label="优先级" prop="level" >
@@ -31,6 +29,9 @@
               </FormItem>
               <FormItem label="备注" prop="remark" >
                 <Input v-model="form.remark" clearable/>
+              </FormItem>
+              <FormItem label="外链地址" prop="content" v-show="form.type=='1'">
+                <Input v-model="form.url" clearable/>
               </FormItem>
           <FormItem class="br">
             <Button @click="handleSubmit" :loading="submitLoading" type="primary">提交并保存</Button>
@@ -40,20 +41,28 @@
         </Form>
       </div>
     </Card>
+    <Card>
+      <div>
+        <VueUeditorWrap v-model="msg" :config="editorConfig" editor-id="editor-demo-01" v-show="form.type=='0'"/>
+      </div>
+    </Card>
   </div>
 </template>
 
 <script>
+import VueUeditorWrap from 'vue-ueditor-wrap';
 import { editVillageIntroduce } from "./api.js";
 export default {
   name: "edit",
   components: {
+    VueUeditorWrap
   },
   props: {
     data: Object
   },
   data() {
     return {
+      msg: "",
       submitLoading: false, // 表单提交状态
       form: { // 添加或编辑表单对象初始化数据
       title: "",
@@ -61,6 +70,7 @@ export default {
       type: "",
       level: "",
       remark: "",
+      url: ""
     },
     // 表单验证规则
     formValidate: {
@@ -71,14 +81,19 @@ export default {
     init() {
       this.handleReset();
       this.form = this.data;
+      this.msg = this.form.content;
     },
     handleReset() {
       this.$refs.form.resetFields();
     },
     handleSubmit() {
+      var that = this;
       this.$refs.form.validate(valid => {
         if (valid) {
           this.submitLoading = true;
+          if(that.form.type == '0') {
+            that.form.content = that.msg;
+          }
           editVillageIntroduce(this.form).then(res => {
             this.submitLoading = false;
             if (res.success) {
@@ -98,6 +113,19 @@ export default {
   },
   mounted() {
     this.init();
+  },
+  created() {
+    this.editorConfig = {
+      UEDITOR_HOME_URL: '/UEditor/',
+      // 编辑器不自动被内容撑高
+      autoHeightEnabled: false,
+      // 初始容器高度
+      initialFrameHeight: 700,
+      // 初始容器宽度
+      initialFrameWidth: '100%',
+      serverUrl: 'https://artskyhome.com:8082/ueditor/jsp/controller.jsp',
+      // serverUrl: '//ueditor.szcloudplus.com/cos',
+    };
   }
 };
 </script>

@@ -8,9 +8,10 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.Max;
 
 /**
  * @author 郑为中
@@ -30,18 +31,21 @@ public class VillageIntroduce extends XbootBaseEntity {
     @ApiModelProperty(value = "标题")
     private String title;
 
-    @Max(value = 2048)
+    @Length(max = 16384)
     @ApiModelProperty(value = "内容")
     private String content;
 
     @ApiModelProperty(value = "创建日期")
     private String createDate;
 
+    @ApiModelProperty(value = "外链地址")
+    private String url;
+
     @ApiModelProperty(value = "审核状态")
     private int auditStatus;
 
-    @ApiModelProperty(value = "类型") // 适配外链
-    private int type;
+    @ApiModelProperty(value = "类型") // 0普通文章 1外链文章
+    private String type;
 
     @ApiModelProperty(value = "优先级")
     private int level;

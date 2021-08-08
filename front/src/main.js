@@ -20,7 +20,7 @@ import VueClipboard from 'vue-clipboard2'
 import VueApexCharts from 'vue-apexcharts'
 import './assets/iconfont/iconfont.css'
 import '@babel/polyfill'
-
+// npm i vue-ueditor-wrap -S
 Vue.config.productionTip = false
 Vue.use(VueLazyload, {
     error: require('./assets/img-error.png'),

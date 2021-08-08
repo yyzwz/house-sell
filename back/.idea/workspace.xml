@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c4488c37-12a8-4f85-aaad-c3cecab90a48" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -18,23 +28,32 @@
   <component name="ProjectId" id="1uCf3yEYiyeSlLI3dGPEHnUn8Xn" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
     <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cn/exrick/xboot/modules/base/utils" />
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/cn/exrick/xboot/modules" />
+    <property name="settings.editor.selected.configurable" value="File.Encoding" />
+  </component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\java\temp\digital-village\back\src\main\java\cn\exrick\xboot\modules" />
       <recent name="C:\java\temp\digital-village\back\src\main\java\cn\exrick\xboot\modules\base\utils" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="cn.exrick.xboot.modules.base.controller.manage" />
+      <recent name="cn.exrick.xboot.modules.file.controller" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.XbootApplication">
@@ -54,10 +73,17 @@
     <configuration name="XbootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="xboot-plus" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cn.exrick.xboot.XbootApplication" />
+      <option name="PROGRAM_PARAMETERS" value="-java.tmp.dir=/path/to/application/temp/" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.XbootMPGenerator" />
+      <item itemvalue="Spring Boot.XbootApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.XbootMPGenerator" />
@@ -76,6 +102,7 @@
       </list>
     </option>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -92,77 +119,15 @@
       <workItem from="1627471034462" duration="2618000" />
       <workItem from="1627902684852" duration="2629000" />
       <workItem from="1627950858862" duration="2886000" />
+      <workItem from="1628320038493" duration="11684000" />
+      <workItem from="1628382956441" duration="8000" />
+      <workItem from="1628382990260" duration="3502000" />
+      <workItem from="1628391242715" duration="7409000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="1091" y="295" key="FileChooserDialogImpl" timestamp="1624174329347">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state x="1091" y="295" key="FileChooserDialogImpl/62.0.2498.1080@62.0.2498.1080" timestamp="1624174329347" />
-    <state width="1522" height="275" key="GridCell.Tab.0.bottom" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.0.bottom/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.0.center" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.0.center/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.0.left" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.0.left/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.0.right" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.0.right/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.1.bottom" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.1.bottom/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.1.center" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.1.center/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.1.left" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.1.left/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="1522" height="275" key="GridCell.Tab.1.right" timestamp="1627954374797">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="1522" height="275" key="GridCell.Tab.1.right/62.0.2498.1080@62.0.2498.1080" timestamp="1627954374797" />
-    <state width="2455" height="307" key="GridCell.Tab.2.bottom" timestamp="1627907457547">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="2455" height="307" key="GridCell.Tab.2.bottom/62.0.2498.1080@62.0.2498.1080" timestamp="1627907457547" />
-    <state width="2455" height="307" key="GridCell.Tab.2.center" timestamp="1627907457546">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="2455" height="307" key="GridCell.Tab.2.center/62.0.2498.1080@62.0.2498.1080" timestamp="1627907457546" />
-    <state width="2455" height="307" key="GridCell.Tab.2.left" timestamp="1627907457546">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="2455" height="307" key="GridCell.Tab.2.left/62.0.2498.1080@62.0.2498.1080" timestamp="1627907457546" />
-    <state width="2455" height="307" key="GridCell.Tab.2.right" timestamp="1627907457546">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state width="2455" height="307" key="GridCell.Tab.2.right/62.0.2498.1080@62.0.2498.1080" timestamp="1627907457546" />
-    <state x="812" y="182" key="SettingsEditor" timestamp="1624174331939">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state x="812" y="182" key="SettingsEditor/62.0.2498.1080@62.0.2498.1080" timestamp="1624174331939" />
-    <state x="987" y="278" width="647" height="524" key="find.popup" timestamp="1627906386468">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state x="987" y="278" width="647" height="524" key="find.popup/62.0.2498.1080@62.0.2498.1080" timestamp="1627906386468" />
-    <state x="967" y="250" key="run.anything.popup" timestamp="1627953194751">
-      <screen x="62" y="0" width="2498" height="1080" />
-    </state>
-    <state x="967" y="250" key="run.anything.popup/62.0.2498.1080@62.0.2498.1080" timestamp="1627953194751" />
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -174,6 +139,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/xboot_plus$XbootApplication.ic" NAME="XbootApplication Coverage Results" MODIFIED="1627906455969" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

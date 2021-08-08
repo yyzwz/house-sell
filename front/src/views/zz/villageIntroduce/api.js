@@ -17,3 +17,6 @@ export const editVillageIntroduce = (params) => {
 export const deleteVillageIntroduce = (params) => {
     return postRequest('/villageIntroduce/delByIds', params)
 }
+export const audit = (params) => {
+    return postRequest('/villageIntroduce/audit', params)
+}

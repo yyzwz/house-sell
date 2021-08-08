@@ -99,8 +99,9 @@ spring:
             misfireThreshold: 10000
   servlet:
     multipart:
-      max-file-size: -1
-      max-request-size: -1
+      max-file-size: 1048576
+      max-request-size: 1048576
+      location: /data/upload_tmp
   jackson:
     time-zone: GMT+8
     serialization:
@@ -233,6 +234,7 @@ captcha:
 ignored:
   # 无需登录认证的请求
   urls:
+    - /xboot/**/getHtmlPage
     - /xboot/app/v1/**
     - /xboot/oauth2/**
     - /xboot/actuator/**

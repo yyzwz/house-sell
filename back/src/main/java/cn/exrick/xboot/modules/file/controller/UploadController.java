@@ -74,12 +74,6 @@ public class UploadController {
             return ResultUtil.error(501, "您还未配置OSS存储服务");
         }
 
-        // IP限流 在线Demo所需 5分钟限1个请求
-        Boolean token = redisRaterLimiter.acquireByRedis("upload:" + ipInfoUtil.getIpAddr(request), 1L, 300000L);
-        if (!token) {
-            throw new LimitException("上传那么多干嘛，等等再传吧");
-        }
-
         if (StrUtil.isNotBlank(base64)) {
             // base64上传
             file = Base64DecodeMultipartFile.base64Convert(base64);
