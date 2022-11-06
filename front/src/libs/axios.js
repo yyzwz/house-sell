@@ -3,11 +3,9 @@ import { getStore, setStore } from './storage';
 import { router } from '../router/index';
 import { Message } from 'view-design';
 import Cookies from 'js-cookie';
-// 统一请求路径前缀
-let baseApi = config.baseApi;
-// 超时设定
-axios.defaults.timeout = 15000;
+let base = '/zwz';
 
+axios.defaults.timeout = 15000;
 axios.interceptors.request.use(config => {
     return config;
 }, err => {
@@ -15,14 +13,11 @@ axios.interceptors.request.use(config => {
     return Promise.resolve(err);
 });
 
-// http response 拦截器
 axios.interceptors.response.use(response => {
     const data = response.data;
 
-    // 根据返回的code值来做不同的处理(和后端约定)
     switch (data.code) {
         case 401:
-            // 未登录 清除已登录状态
             Cookies.set('userInfo', '');
             setStore('accessToken', '');
             if (router.history.current.name != "login") {
@@ -35,7 +30,6 @@ axios.interceptors.response.use(response => {
             }
             break;
         case 403:
-            // 没有权限
             if (data.message !== null) {
                 Message.error(data.message);
             } else {
@@ -43,7 +37,6 @@ axios.interceptors.response.use(response => {
             }
             break;
         case 500:
-            // 错误
             if (data.message !== null) {
                 Message.error(data.message);
             } else {
@@ -56,7 +49,6 @@ axios.interceptors.response.use(response => {
 
     return data;
 }, (err) => {
-    // 返回状态码不为200时候的错误处理
     Message.error(err.toString());
     return Promise.resolve(err);
 });
@@ -65,7 +57,7 @@ export const getRequest = (url, params) => {
     let accessToken = getStore('accessToken');
     return axios({
         method: 'get',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         params: params,
         headers: {
             'accessToken': accessToken
@@ -77,7 +69,7 @@ export const postRequest = (url, params) => {
     let accessToken = getStore("accessToken");
     return axios({
         method: 'post',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         data: params,
         transformRequest: [function (data) {
             let ret = '';
@@ -98,7 +90,7 @@ export const putRequest = (url, params) => {
     let accessToken = getStore("accessToken");
     return axios({
         method: 'put',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         data: params,
         transformRequest: [function (data) {
             let ret = '';
@@ -119,7 +111,7 @@ export const postBodyRequest = (url, params) => {
     let accessToken = getStore('accessToken');
     return axios({
         method: 'post',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         data: params,
         headers: {
             'accessToken': accessToken
@@ -127,15 +119,10 @@ export const postBodyRequest = (url, params) => {
     });
 };
 
-/**
- * 无需token验证的GET请求 避免旧token过期导致请求失败
- * @param {*} url 
- * @param {*} params 
- */
 export const getNoAuthRequest = (url, params) => {
     return axios({
         method: 'get',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         params: params
     });
 };
@@ -143,7 +130,7 @@ export const getNoAuthRequest = (url, params) => {
 export const postNoAuthRequest = (url, params) => {
     return axios({
         method: 'post',
-        url: `${baseApi}${url}`,
+        url: `${base}${url}`,
         data: params,
         transformRequest: [function (data) {
             let ret = '';

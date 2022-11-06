@@ -1,0 +1,986 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+DROP DATABASE IF EXISTS `housesell`;
+CREATE DATABASE IF NOT EXISTS `housesell` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_croatian_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `housesell`;
+
+DROP TABLE IF EXISTS `a_customer_lease`;
+CREATE TABLE IF NOT EXISTS `a_customer_lease` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `house_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_money` decimal(19,2) DEFAULT NULL,
+  `user_remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_customer_lease`;
+INSERT INTO `a_customer_lease` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `house_id`, `seller_id`, `status`, `user_id`, `user_money`, `user_remark`) VALUES
+	('1588813619368431616', '17859654125', '2022-11-05 16:41:00.246000', 0, '17859654121', '2022-11-05 16:55:28.977000', '1588808881004482560', '1464772465946398721', 1, '1464764315201572865', 1200.00, '我要租你的房子！');
+
+DROP TABLE IF EXISTS `a_customer_sell`;
+CREATE TABLE IF NOT EXISTS `a_customer_sell` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `house_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_money` decimal(19,2) DEFAULT NULL,
+  `user_remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_customer_sell`;
+INSERT INTO `a_customer_sell` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `house_id`, `seller_id`, `status`, `user_id`, `user_money`, `user_remark`) VALUES
+	('1588813374744039424', '17859654125', '2022-11-05 16:40:01.924000', 0, '17859654121', '2022-11-05 16:55:01.095000', '1588808510404169728', '1464772465946398721', 1, '1464764315201572865', 120.00, '我要了哈哈！');
+
+DROP TABLE IF EXISTS `a_department`;
+CREATE TABLE IF NOT EXISTS `a_department` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` int DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `parent_id` bigint unsigned DEFAULT NULL,
+  `sort_order` decimal(10,2) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `is_parent` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_department`;
+INSERT INTO `a_department` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `parent_id`, `sort_order`, `status`, `title`, `is_parent`) VALUES
+	(1464487288363945985, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 0, 1.00, 0, '人力资源部', b'1'),
+	(1464487332064399361, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 0, 2.00, 0, '行政综合部', b'1'),
+	(1464487379074158593, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 0, 3.00, 0, '设计研发部', b'1'),
+	(1464487406328745985, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 0, 4.00, 0, '财务部', b'0'),
+	(1464487432169852929, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 0, 5.00, 0, '综合发展部', b'0'),
+	(1464487524662644737, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487288363945985, 1.00, 0, 'HRBP部', b'0'),
+	(1464487559647334401, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487288363945985, 2.00, 0, '招聘部', b'0'),
+	(1464487623933431809, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487332064399361, 1.00, 0, '安保部', b'0'),
+	(1464487656678363137, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487332064399361, 2.00, 0, '保洁部', b'0'),
+	(1464487691780493313, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487332064399361, 3.00, 0, '设备维修部', b'0'),
+	(1464487733895499777, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487379074158593, 1.00, 0, '视频剪辑部', b'0'),
+	(1464487807572643841, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464487379074158593, 2.00, 0, '产品应用部', b'0'),
+	(1527834362656198656, 'admin', '2022-05-21 10:11:13', 0, NULL, NULL, 0, 6.00, 0, '客服部', b'0');
+
+DROP TABLE IF EXISTS `a_department_header`;
+CREATE TABLE IF NOT EXISTS `a_department_header` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `department_id` bigint unsigned DEFAULT NULL,
+  `type` tinyint(1) DEFAULT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_department_header`;
+
+DROP TABLE IF EXISTS `a_dict`;
+CREATE TABLE IF NOT EXISTS `a_dict` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `sort_order` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_dict`;
+INSERT INTO `a_dict` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `title`, `type`, `sort_order`) VALUES
+	(75135930788220928, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', '性别', 'sex', 0.00),
+	(75388696739713024, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', '分权限', 'permission_type', 2.00),
+	(1536612750841745408, 'admin', '2022-06-14 15:33:23', 0, NULL, NULL, '', '学历', 'education', 3.00),
+	(1536613395229446144, 'admin', '2022-06-14 15:35:57', 0, NULL, NULL, '', '在职状态', 'occupationStatus', 4.00);
+
+DROP TABLE IF EXISTS `a_dict_data`;
+CREATE TABLE IF NOT EXISTS `a_dict_data` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `dict_id` bigint unsigned DEFAULT NULL,
+  `sort_order` decimal(10,2) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sort_order` (`sort_order`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_dict_data`;
+INSERT INTO `a_dict_data` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `dict_id`, `sort_order`, `status`, `title`, `value`) VALUES
+	(75158227712479232, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75135930788220928, 0.00, 0, '男', '男'),
+	(75159254272577536, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75135930788220928, 1.00, 0, '女', '女'),
+	(75159898425397248, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75135930788220928, 2.00, -1, '保密', '保密'),
+	(75390787835138048, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 0.00, 0, '查看操作(view)', 'view'),
+	(75390886501945344, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 1.00, 0, '添加操作(add)', 'add'),
+	(75390993939042304, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 2.00, 0, '编辑操作(edit)', 'edit'),
+	(75391067532300288, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 3.00, 0, '删除操作(delete)', 'delete'),
+	(75391126902673408, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 4.00, 0, '清空操作(clear)', 'clear'),
+	(75391192883269632, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 5.00, 0, '启用操作(enable)', 'enable'),
+	(75391251024711680, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 6.00, 0, '禁用操作(disable)', 'disable'),
+	(75391297124306944, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 7.00, 0, '搜索操作(search)', 'search'),
+	(75391343379091456, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 8.00, 0, '上传文件(upload)', 'upload'),
+	(75391407526776832, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 9.00, 0, '导出操作(output)', 'output'),
+	(75391475042488320, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 10.00, 0, '导入操作(input)', 'input'),
+	(75391522182270976, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 11.00, 0, '分配权限(editPerm)', 'editPerm'),
+	(75391576364290048, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 12.00, 0, '设为默认(setDefault)', 'setDefault'),
+	(75391798033256448, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 75388696739713024, 13.00, 0, '其他操作(other)', 'other'),
+	(1536612796106674176, 'admin', '2022-06-14 15:33:34', 0, NULL, NULL, '', 1536612750841745408, 1.00, 0, '博士', '博士'),
+	(1536612834962706432, 'admin', '2022-06-14 15:33:43', 0, NULL, NULL, '', 1536612750841745408, 2.00, 0, '硕士', '硕士'),
+	(1536612883465637888, 'admin', '2022-06-14 15:33:55', 0, 'admin', '2022-06-14 15:34:13', '', 1536612750841745408, 3.00, 0, '本科', '本科'),
+	(1536612930576060416, 'admin', '2022-06-14 15:34:06', 0, 'admin', '2022-06-14 15:34:11', '', 1536612750841745408, 4.00, 0, '专科', '专科'),
+	(1536612993519980544, 'admin', '2022-06-14 15:34:21', 0, '', NULL, '', 1536612750841745408, 5.00, 0, '高中及以下', '高中及以下'),
+	(1536613425902391296, 'admin', '2022-06-14 15:36:04', 0, NULL, NULL, '', 1536613395229446144, 1.00, 0, '在职', '在职'),
+	(1536613447544999936, 'admin', '2022-06-14 15:36:09', 0, NULL, NULL, '', 1536613395229446144, 2.00, 0, '离职', '离职');
+
+DROP TABLE IF EXISTS `a_file`;
+CREATE TABLE IF NOT EXISTS `a_file` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `size` bigint unsigned DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `f_key` varchar(255) DEFAULT NULL,
+  `location` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `create_time` (`create_time`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_file`;
+INSERT INTO `a_file` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `name`, `size`, `type`, `url`, `f_key`, `location`) VALUES
+	(1527897791781801984, 'admin', '2022-05-21 14:23:15', 0, NULL, NULL, 'gh_57ba35562a20_258.jpg', 43531, 'image/jpeg', 'C:\\oa-file/20220521/1e07b00ffc20427fbdf2c434231c1e1e.jpg', '1e07b00ffc20427fbdf2c434231c1e1e.jpg', 0),
+	(1527897840372813824, 'admin', '2022-05-21 14:23:27', 0, NULL, NULL, '美术版权.xlsx', 3605123, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'C:\\oa-file/20220521/4c1dadd45a8a4aca9a9ebd5f3256ba45.xlsx', '4c1dadd45a8a4aca9a9ebd5f3256ba45.xlsx', 0),
+	(1527897921570344960, 'admin', '2022-05-21 14:23:46', 0, NULL, NULL, '公司大门通行设备使用说明-V1.pdf', 914877, 'application/pdf', 'C:\\oa-file/20220521/74e865aed9594ea9a9a0536161e40066.pdf', '74e865aed9594ea9a9a0536161e40066.pdf', 0),
+	(1527898199690448896, 'admin', '2022-05-21 14:24:52', 0, NULL, NULL, '111.mp4', 180593, 'video/mp4', 'C:\\oa-file/20220521/113344a2389349ed8d02fb7dacfa058f.mp4', '113344a2389349ed8d02fb7dacfa058f.mp4', 0),
+	(1527899386892390400, 'admin', '2022-05-21 14:29:36', 0, NULL, NULL, '【模版】需求文档.md.zip', 3104, 'application/x-zip-compressed', 'C:\\oa-file/20220521/dacc0bc61cf34bc18d1259b4ce60d52c.zip', 'dacc0bc61cf34bc18d1259b4ce60d52c.zip', 0),
+	(1536614206311370752, 'admin', '2022-06-14 15:39:10', 0, NULL, NULL, '张三签名.png', 1686, 'image/png', 'C:\\\\oa-file/20220614/62a6f2fde5994e5fac6a78aa5ad070ad.png', '62a6f2fde5994e5fac6a78aa5ad070ad.png', 0),
+	(1536614698903015424, 'admin', '2022-06-14 15:41:08', 0, NULL, NULL, '张三简历.pdf', 28091, 'application/pdf', 'C:\\\\oa-file/20220614/2a643018f08a4a4bbfacbb19218ab1e2.pdf', '2a643018f08a4a4bbfacbb19218ab1e2.pdf', 0);
+
+DROP TABLE IF EXISTS `a_house_lease`;
+CREATE TABLE IF NOT EXISTS `a_house_lease` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_money` decimal(19,2) DEFAULT NULL,
+  `house_owner` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_size` decimal(19,2) DEFAULT NULL,
+  `house_type` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url2` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url3` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `init_money` decimal(19,2) DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_house_lease`;
+INSERT INTO `a_house_lease` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `address`, `house_money`, `house_owner`, `house_size`, `house_type`, `image_url`, `image_url2`, `image_url3`, `init_money`, `mobile`, `remark`, `seller_id`, `status`) VALUES
+	('1588808739903901696', 'admin', '2022-11-05 16:21:36.894000', 0, NULL, NULL, '浙江省绍兴市XXX', 1000.00, '员工A', 68.00, '单身公寓', 'https://tuzhizhijia.com/uploads/220108/1-22010Q4594V60.jpg', 'https://tuzhizhijia.com/uploads/220108/1-22010Q4594V60.jpg', 'https://tuzhizhijia.com/uploads/220108/1-22010Q4594V60.jpg', 2000.00, '13600000002', '测试', '1464772465946398721', 0),
+	('1588808881004482560', 'admin', '2022-11-05 16:22:10.542000', 0, NULL, NULL, '浙江省温州市XXXXX', 1500.00, '员工B', 78.00, '三室一厅', 'https://tuzhizhijia.com/uploads/allimg/161220/1-16122011542RZ.jpg', 'https://tuzhizhijia.com/uploads/allimg/161220/1-16122011542RZ.jpg', 'https://tuzhizhijia.com/uploads/allimg/161220/1-16122011542RZ.jpg', 2400.00, '13896541256', '测试', '1464772465946398721', 0);
+
+DROP TABLE IF EXISTS `a_house_lease_order`;
+CREATE TABLE IF NOT EXISTS `a_house_lease_order` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_money` decimal(19,2) DEFAULT NULL,
+  `house_owner` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_size` decimal(19,2) DEFAULT NULL,
+  `house_type` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `init_money` decimal(19,2) DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_money` decimal(19,2) DEFAULT NULL,
+  `user_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_house_lease_order`;
+INSERT INTO `a_house_lease_order` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `address`, `house_id`, `house_money`, `house_owner`, `house_size`, `house_type`, `init_money`, `mobile`, `remark`, `seller_id`, `status`, `user_id`, `user_mobile`, `user_money`, `user_name`, `user_remark`) VALUES
+	('1588817263136477184', '17859654121', '2022-11-05 16:55:28.992000', 0, '17859654125', '2022-11-05 17:01:17.455000', '浙江省温州市XXXXX', '1588808881004482560', 1500.00, '17859654121', 78.00, '三室一厅', 2400.00, '17859654121', '测试', '1464772465946398721', 1, '1464764315201572865', '17859654125', 1200.00, '测试买家', '我要租你的房子！');
+
+DROP TABLE IF EXISTS `a_house_sell`;
+CREATE TABLE IF NOT EXISTS `a_house_sell` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_money` decimal(19,2) DEFAULT NULL,
+  `house_owner` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_size` decimal(19,2) DEFAULT NULL,
+  `house_type` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url2` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `image_url3` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_house_sell`;
+INSERT INTO `a_house_sell` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `address`, `house_money`, `house_owner`, `house_size`, `house_type`, `image_url`, `image_url2`, `image_url3`, `mobile`, `remark`, `seller_id`, `status`) VALUES
+	('1588808032635195392', 'admin', '2022-11-05 16:18:48.278000', 0, NULL, NULL, '浙江省杭州市XXXX', 150.00, '张三', 99.00, '三室一厅', 'https://tuzhizhijia.com/uploads/allimg/200517/1-20051G103330-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/200517/1-20051G103330-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/200517/1-20051G103330-L.jpg', '0571-62816845', '测试', '1464772465946398721', 0),
+	('1588808247119319040', 'admin', '2022-11-05 16:19:39.407000', 0, NULL, NULL, '浙江省宁波市XXX', 230.00, '李四', 120.00, '五室两厅', 'https://tuzhizhijia.com/uploads/allimg/160212/1-1602121302410-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/160212/1-1602121302410-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/160212/1-1602121302410-L.jpg', '0571-62923654', '测试', '1464772465946398721', 0),
+	('1588808510404169728', 'admin', '2022-11-05 16:20:42.178000', 0, NULL, NULL, '浙江省舟山市XXX', 46.00, '王五', 30.00, '单身公寓', 'https://tuzhizhijia.com/uploads/allimg/170107/1-1F10G433400-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/170107/1-1F10G433400-L.jpg', 'https://tuzhizhijia.com/uploads/allimg/170107/1-1F10G433400-L.jpg', '13600000021', '测试', '1464772465946398721', 0);
+
+DROP TABLE IF EXISTS `a_house_sell_order`;
+CREATE TABLE IF NOT EXISTS `a_house_sell_order` (
+  `id` varchar(255) COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_money` decimal(19,2) DEFAULT NULL,
+  `house_owner` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `house_size` decimal(19,2) DEFAULT NULL,
+  `house_type` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `seller_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` int NOT NULL,
+  `user_id` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_mobile` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_money` decimal(19,2) DEFAULT NULL,
+  `user_name` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  `user_remark` varchar(255) COLLATE utf8_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_house_sell_order`;
+INSERT INTO `a_house_sell_order` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `address`, `house_id`, `house_money`, `house_owner`, `house_size`, `house_type`, `mobile`, `remark`, `seller_id`, `status`, `user_id`, `user_mobile`, `user_money`, `user_name`, `user_remark`) VALUES
+	('1588817146182504448', '17859654121', '2022-11-05 16:55:01.109000', 0, '17859654125', '2022-11-05 17:01:00.937000', '浙江省舟山市XXX', '1588808510404169728', 46.00, '王五', 30.00, '单身公寓', '13600000021', '测试', '1464772465946398721', 1, '1464764315201572865', '17859654125', 120.00, '测试买家', '我要了哈哈！');
+
+DROP TABLE IF EXISTS `a_log`;
+CREATE TABLE IF NOT EXISTS `a_log` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `cost_time` int unsigned DEFAULT NULL,
+  `ip` varchar(255) DEFAULT NULL,
+  `ip_info` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `request_param` longtext,
+  `request_type` varchar(255) DEFAULT NULL,
+  `request_url` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `log_type` tinyint(1) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `device` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `create_time` (`create_time`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_log`;
+INSERT INTO `a_log` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `cost_time`, `ip`, `ip_info`, `name`, `request_param`, `request_type`, `request_url`, `username`, `log_type`, `code`, `device`) VALUES
+	(1536883393592168448, NULL, '2022-06-15 09:28:50', 0, NULL, '2022-06-15 09:28:50', 287, '127.0.0.1', '本地测试', '登录系统', '{"password":"密码隐藏","code":"8817","saveLogin":"true","captchaId":"ef9e5437ff544c8b91d9810febcb58e7","username":"admin"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883393592168449, NULL, '2022-06-15 09:28:50', 0, NULL, '2022-06-15 09:28:50', 263, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883394787545090, NULL, '2022-06-15 09:28:50', 0, NULL, '2022-06-15 09:28:50', 43, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883395219558400, NULL, '2022-06-15 09:28:50', 0, NULL, '2022-06-15 09:28:50', 69, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883401452294144, NULL, '2022-06-15 09:28:52', 0, NULL, '2022-06-15 09:28:52', 76, '127.0.0.1', '本地测试', '查询日志', '{"logType":"1","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883413934542848, NULL, '2022-06-15 09:28:54', 0, NULL, '2022-06-15 09:28:54', 40, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883415226388480, NULL, '2022-06-15 09:28:55', 0, NULL, '2022-06-15 09:28:55', 39, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883415259942913, NULL, '2022-06-15 09:28:55', 0, NULL, '2022-06-15 09:28:55', 49, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883415280914432, NULL, '2022-06-15 09:28:55', 0, NULL, '2022-06-15 09:28:55', 94, '127.0.0.1', '本地测试', '查询用户', '{"pageNumber":"1","departmentId":"","nickname":"","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883415444492288, NULL, '2022-06-15 09:28:55', 0, NULL, '2022-06-15 09:28:55', 36, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883420095975424, NULL, '2022-06-15 09:28:56', 0, NULL, '2022-06-15 09:28:56', 40, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883420171472896, NULL, '2022-06-15 09:28:56', 0, NULL, '2022-06-15 09:28:56', 58, '127.0.0.1', '本地测试', '查询用户', '{"pageNumber":"1","departmentId":"","pageSize":"10","sort":"createTime","order":"desc"}', 'GET', '/zwz/myUser/getByPage', 'admin', 2, 'USER-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883421131968513, NULL, '2022-06-15 09:28:56', 0, NULL, '2022-06-15 09:28:56', 38, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883423262674944, NULL, '2022-06-15 09:28:57', 0, NULL, '2022-06-15 09:28:57', 50, '127.0.0.1', '本地测试', '查询系统文件', '{"pageNumber":"1","endDate":"","fkey":"","name":"","pageSize":"15","sort":"createTime","type":"","startDate":"","order":"desc"}', 'GET', '/zwz/file/getByCondition', 'admin', 2, 'FILE-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883424516771840, NULL, '2022-06-15 09:28:57', 0, NULL, '2022-06-15 09:28:57', 41, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_HTTP"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883424516771841, NULL, '2022-06-15 09:28:57', 0, NULL, '2022-06-15 09:28:57', 34, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_PATH"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883424516771842, NULL, '2022-06-15 09:28:57', 0, NULL, '2022-06-15 09:28:57', 44, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_VIEW"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883426920108032, NULL, '2022-06-15 09:28:58', 0, NULL, '2022-06-15 09:28:58', 55, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883430367825920, NULL, '2022-06-15 09:28:58', 0, NULL, '2022-06-15 09:28:58', 45, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883433186398208, NULL, '2022-06-15 09:28:59', 0, NULL, '2022-06-15 09:28:59', 43, '127.0.0.1', '本地测试', '查询日志', '{"logType":"1","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883444859146240, NULL, '2022-06-15 09:29:02', 0, NULL, '2022-06-15 09:29:02', 50, '127.0.0.1', '本地测试', '查询所有数据字典', '{}', 'GET', '/zwz/dict/getAll', 'admin', 2, 'DICT-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883444947226624, NULL, '2022-06-15 09:29:02', 0, NULL, '2022-06-15 09:29:02', 59, '127.0.0.1', '本地测试', '查询数据字典值', '{"pageNumber":"1","name":"","pageSize":"10","sort":"sortOrder","status":"","order":"asc"}', 'GET', '/zwz/dictData/getByCondition', 'admin', 2, 'DICT_DATA-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883446968881152, NULL, '2022-06-15 09:29:02', 0, NULL, '2022-06-15 09:29:02', 43, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883451238682624, NULL, '2022-06-15 09:29:03', 0, NULL, '2022-06-15 09:29:03', 52, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883451347734528, NULL, '2022-06-15 09:29:03', 0, NULL, '2022-06-15 09:29:03', 65, '127.0.0.1', '本地测试', '查询学生', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/student/getByPage', 'admin', 3, 'STUDENT-04', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883452538916864, NULL, '2022-06-15 09:29:04', 0, NULL, '2022-06-15 09:29:04', 43, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/education', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883453881094144, NULL, '2022-06-15 09:29:04', 0, NULL, '2022-06-15 09:29:04', 48, '127.0.0.1', '本地测试', '查询教师', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/teacher/getByPage', 'admin', 3, 'TEACHER-04', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883466526920704, NULL, '2022-06-15 09:29:07', 0, NULL, '2022-06-15 09:29:07', 42, '127.0.0.1', '本地测试', '查询图表数据', '{}', 'GET', '/zwz/teacher/getAntvVoList', 'admin', 4, 'CHART-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883470083690496, NULL, '2022-06-15 09:29:08', 0, NULL, '2022-06-15 09:29:08', 46, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883482377195520, NULL, '2022-06-15 09:29:11', 0, NULL, '2022-06-15 09:29:11', 41, '127.0.0.1', '本地测试', '查询日志', '{"logType":"1","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883484109443072, NULL, '2022-06-15 09:29:11', 0, NULL, '2022-06-15 09:29:11', 50, '127.0.0.1', '本地测试', '查询日志', '{"logType":"2","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883506003709952, NULL, '2022-06-15 09:29:16', 0, NULL, '2022-06-15 09:29:16', 86, '127.0.0.1', '本地测试', '查询日志', '{"logType":"3","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883509954744320, NULL, '2022-06-15 09:29:17', 0, NULL, '2022-06-15 09:29:17', 38, '127.0.0.1', '本地测试', '查询日志', '{"logType":"4","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1536883517961670656, NULL, '2022-06-15 09:29:19', 0, NULL, '2022-06-15 09:29:19', 39, '127.0.0.1', '本地测试', '查询日志', '{"logType":"1","pageNumber":"1","endDate":"","pageSize":"15","sort":"createTime","ipInfo":"","startDate":"","key":"","order":"desc"}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 101.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787704089415680, NULL, '2022-11-05 14:58:02', 0, NULL, '2022-11-05 14:58:02', 464, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"2676","captchaId":"f9e43ffc0ac7405ca60d1b77cd7400bf","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787704122970112, NULL, '2022-11-05 14:58:02', 0, NULL, '2022-11-05 14:58:02', 444, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787706442420224, NULL, '2022-11-05 14:58:02', 0, NULL, '2022-11-05 14:58:02', 45, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787706463391744, NULL, '2022-11-05 14:58:02', 0, NULL, '2022-11-05 14:58:02', 130, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787800172531712, NULL, '2022-11-05 14:58:25', 0, NULL, '2022-11-05 14:58:25', 102, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588787801317576704, NULL, '2022-11-05 14:58:25', 0, NULL, '2022-11-05 14:58:25', 39, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588788031714889728, NULL, '2022-11-05 14:59:20', 0, NULL, '2022-11-05 14:59:20', 92, '127.0.0.1', '本地测试', '添加菜单', '{"type":"-1","level":"0","sortOrder":"2","status":"0","title":"房屋租售","name":"houseTopMenu","icon":"md-aperture"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588788032822185984, NULL, '2022-11-05 14:59:20', 0, NULL, '2022-11-05 14:59:20', 54, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588788033560383489, NULL, '2022-11-05 14:59:20', 0, NULL, '2022-11-05 14:59:20', 40, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588788033715572736, NULL, '2022-11-05 14:59:20', 0, NULL, '2022-11-05 14:59:20', 77, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588788040220938240, NULL, '2022-11-05 14:59:22', 0, NULL, '2022-11-05 14:59:22', 35, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588788031622615040"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790012445593600, NULL, '2022-11-05 15:07:12', 0, NULL, '2022-11-05 15:07:12', 337, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-aperture","type":"0","parentId":"1588788031622615040","level":"1","sortOrder":"1","buttonType":"","status":"0","path":"/adminMenu","component":"Main","title":"管理员维护","name":"adminMenu"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790014010068992, NULL, '2022-11-05 15:07:12', 0, NULL, '2022-11-05 15:07:12', 58, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790015465492480, NULL, '2022-11-05 15:07:13', 0, NULL, '2022-11-05 15:07:13', 66, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790015637458944, NULL, '2022-11-05 15:07:13', 0, NULL, '2022-11-05 15:07:13', 111, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790021681451008, NULL, '2022-11-05 15:07:14', 0, NULL, '2022-11-05 15:07:14', 64, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790012172963840"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790107660488704, NULL, '2022-11-05 15:07:35', 0, NULL, '2022-11-05 15:07:35', 95, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-at","type":"0","parentId":"1588790012172963840","level":"2","sortOrder":"1","buttonType":"","status":"0","title":"房屋销售维护","component":"house/houseSell/index","name":"houseSell","path":"houseSell"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790109464039424, NULL, '2022-11-05 15:07:35', 0, NULL, '2022-11-05 15:07:35', 54, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790109464039425, NULL, '2022-11-05 15:07:35', 0, NULL, '2022-11-05 15:07:35', 91, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790109623422976, NULL, '2022-11-05 15:07:35', 0, NULL, '2022-11-05 15:07:35', 118, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790150941511680, NULL, '2022-11-05 15:07:45', 0, NULL, '2022-11-05 15:07:45', 83, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588788031622615040"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790211838611456, NULL, '2022-11-05 15:08:00', 0, NULL, '2022-11-05 15:08:00', 94, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-card","type":"0","parentId":"1588788031622615040","level":"1","sortOrder":"2","buttonType":"","status":"0","path":"/userMenu","component":"Main","title":"买家支持","name":"userMenu"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790213021405184, NULL, '2022-11-05 15:08:00', 0, NULL, '2022-11-05 15:08:00', 52, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790213751214080, NULL, '2022-11-05 15:08:00', 0, NULL, '2022-11-05 15:08:00', 49, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790213969317888, NULL, '2022-11-05 15:08:00', 0, NULL, '2022-11-05 15:08:00', 97, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790217236680704, NULL, '2022-11-05 15:08:01', 0, NULL, '2022-11-05 15:08:01', 37, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790211800862720"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790321783902208, NULL, '2022-11-05 15:08:26', 0, NULL, '2022-11-05 15:08:26', 96, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-call","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"1","buttonType":"","status":"0","title":"我申请的出租","component":"house/customerLeaseByUser/index","name":"customerLeaseByUser","path":"customerLeaseByUser"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790322895392768, NULL, '2022-11-05 15:08:26', 0, NULL, '2022-11-05 15:08:26', 38, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790323574870016, NULL, '2022-11-05 15:08:26', 0, NULL, '2022-11-05 15:08:26', 49, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790323805556736, NULL, '2022-11-05 15:08:26', 0, NULL, '2022-11-05 15:08:26', 93, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790328029220864, NULL, '2022-11-05 15:08:27', 0, NULL, '2022-11-05 15:08:27', 40, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790211800862720"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790412737384448, NULL, '2022-11-05 15:08:47', 0, NULL, '2022-11-05 15:08:47', 107, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-apps","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"2","buttonType":"","status":"0","title":"房屋出租浏览","path":"houseLeaseByUser","name":"houseLeaseByUser","component":"house/houseLeaseByUser/index"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790413760794624, NULL, '2022-11-05 15:08:48', 0, NULL, '2022-11-05 15:08:48', 56, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790414717095936, NULL, '2022-11-05 15:08:48', 0, NULL, '2022-11-05 15:08:48', 36, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790414847119361, NULL, '2022-11-05 15:08:48', 0, NULL, '2022-11-05 15:08:48', 74, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790562947993600, NULL, '2022-11-05 15:09:23', 0, NULL, '2022-11-05 15:09:23', 61, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-apps","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"3","buttonType":"","status":"0","title":"房屋出租维护","component":"house/houseLease/index","name":"houseLease","path":"houseLease"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790564571189248, NULL, '2022-11-05 15:09:24', 0, NULL, '2022-11-05 15:09:24', 21, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790564575383552, NULL, '2022-11-05 15:09:24', 0, NULL, '2022-11-05 15:09:24', 48, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790564730572800, NULL, '2022-11-05 15:09:24', 0, NULL, '2022-11-05 15:09:24', 61, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790631696830464, NULL, '2022-11-05 15:09:40', 0, NULL, '2022-11-05 15:09:40', 57, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-analytics","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"4","buttonType":"","status":"0","title":"房屋销售浏览","component":"house/houseSellByUser/index","name":"houseSellByUser","path":"houseSellByUser"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790633324220419, NULL, '2022-11-05 15:09:40', 0, NULL, '2022-11-05 15:09:40', 22, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790633332609025, NULL, '2022-11-05 15:09:40', 0, NULL, '2022-11-05 15:09:40', 57, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790633458438144, NULL, '2022-11-05 15:09:40', 0, NULL, '2022-11-05 15:09:40', 53, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790659014332416, NULL, '2022-11-05 15:09:46', 0, NULL, '2022-11-05 15:09:46', 66, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588788031622615040"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790707412406272, NULL, '2022-11-05 15:09:58', 0, NULL, '2022-11-05 15:09:58', 90, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-analytics","type":"0","parentId":"1588788031622615040","level":"1","sortOrder":"3","buttonType":"","status":"0","path":"/sellerMenu","component":"Main","title":"卖家支持","name":"sellerMenu"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790708586811392, NULL, '2022-11-05 15:09:58', 0, NULL, '2022-11-05 15:09:58', 52, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790709266288640, NULL, '2022-11-05 15:09:58', 0, NULL, '2022-11-05 15:09:58', 51, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790709576667136, NULL, '2022-11-05 15:09:58', 0, NULL, '2022-11-05 15:09:58', 119, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790714874073088, NULL, '2022-11-05 15:09:59', 0, NULL, '2022-11-05 15:09:59', 40, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790707383046144"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790791642419200, NULL, '2022-11-05 15:10:18', 0, NULL, '2022-11-05 15:10:18', 73, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-alarm","type":"0","parentId":"1588790707383046144","level":"2","sortOrder":"1","buttonType":"","status":"0","title":"我的销售订单","component":"house/customerSellBySeller/index","name":"customerSellBySeller","path":"customerSellBySeller"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790792867155968, NULL, '2022-11-05 15:10:18', 0, NULL, '2022-11-05 15:10:18', 53, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790793504690176, NULL, '2022-11-05 15:10:18', 0, NULL, '2022-11-05 15:10:18', 36, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790793697628160, NULL, '2022-11-05 15:10:18', 0, NULL, '2022-11-05 15:10:18', 82, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790877373992960, NULL, '2022-11-05 15:10:38', 0, NULL, '2022-11-05 15:10:38', 68, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-american-football","type":"0","parentId":"1588790707383046144","level":"2","sortOrder":"2","buttonType":"","status":"0","title":"我的出租订单","component":"house/customerLeaseBySeller/index","name":"customerLeaseBySeller","path":"customerLeaseBySeller"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790879051714560, NULL, '2022-11-05 15:10:39', 0, NULL, '2022-11-05 15:10:39', 34, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790879051714562, NULL, '2022-11-05 15:10:39', 0, NULL, '2022-11-05 15:10:39', 75, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588790879164960768, NULL, '2022-11-05 15:10:39', 0, NULL, '2022-11-05 15:10:39', 102, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803634647404544, NULL, '2022-11-05 16:01:20', 0, NULL, '2022-11-05 16:01:20', 138, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790321746153472"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803666062741504, NULL, '2022-11-05 16:01:27', 0, NULL, '2022-11-05 16:01:27', 67, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790631667470336"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803679291576320, NULL, '2022-11-05 16:01:30', 0, NULL, '2022-11-05 16:01:30', 28, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790562918633472"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803719850496000, NULL, '2022-11-05 16:01:40', 0, NULL, '2022-11-05 16:01:40', 77, '127.0.0.1', '本地测试', '编辑菜单', '{"id":"1588790562918633472","updateBy":"","createBy":"admin","createTime":"2022-11-05 15:09:23","delFlag":"0","name":"houseLease","title":"房屋销售浏览","level":"2","status":"0","type":"0","component":"house/houseSellByUser/index","path":"houseSellByUser","icon":"ios-apps","parentId":"1588790211800862720","buttonType":"","description":"","sortOrder":"3","expand":"true","selected":"true","checked":"false","permTypes":"","nodeKey":"22"}', 'POST', '/zwz/permission/edit', 'admin', 2, 'PERMISSION-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803721586937858, NULL, '2022-11-05 16:01:40', 0, NULL, '2022-11-05 16:01:40', 34, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803721704378368, NULL, '2022-11-05 16:01:41', 0, NULL, '2022-11-05 16:01:41', 104, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803721779875840, NULL, '2022-11-05 16:01:41', 0, NULL, '2022-11-05 16:01:41', 86, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803724665556992, NULL, '2022-11-05 16:01:41', 0, NULL, '2022-11-05 16:01:41', 36, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790631667470336"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803777790611456, NULL, '2022-11-05 16:01:54', 0, NULL, '2022-11-05 16:01:54', 87, '127.0.0.1', '本地测试', '编辑菜单', '{"id":"1588790631667470336","updateBy":"","createBy":"admin","createTime":"2022-11-05 15:09:40","delFlag":"0","name":"houseSellByUser","title":"我申请的销售","level":"2","status":"0","type":"0","component":"house/customerSellByUser/index","path":"customerSellByUser","icon":"md-analytics","parentId":"1588790211800862720","buttonType":"","description":"","sortOrder":"4","expand":"true","selected":"true","checked":"false","permTypes":"","nodeKey":"23"}', 'POST', '/zwz/permission/edit', 'admin', 2, 'PERMISSION-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803778998571008, NULL, '2022-11-05 16:01:54', 0, NULL, '2022-11-05 16:01:54', 93, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803779543830528, NULL, '2022-11-05 16:01:54', 0, NULL, '2022-11-05 16:01:54', 40, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588803779774517248, NULL, '2022-11-05 16:01:54', 0, NULL, '2022-11-05 16:01:54', 97, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804207660634112, NULL, '2022-11-05 16:03:36', 0, NULL, '2022-11-05 16:03:36', 78, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790707383046144"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804266942926848, NULL, '2022-11-05 16:03:51', 0, NULL, '2022-11-05 16:03:51', 81, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-analytics","type":"0","parentId":"1588790707383046144","level":"2","sortOrder":"3","buttonType":"","status":"0","title":"我的销售交易","component":"house/sellOrderBySeller/index","name":"sellOrderBySeller","path":"sellOrderBySeller"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804268662591488, NULL, '2022-11-05 16:03:51', 0, NULL, '2022-11-05 16:03:51', 35, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804268675174400, NULL, '2022-11-05 16:03:51', 0, NULL, '2022-11-05 16:03:51', 81, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804268821975040, NULL, '2022-11-05 16:03:51', 0, NULL, '2022-11-05 16:03:51', 75, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804332680253440, NULL, '2022-11-05 16:04:06', 0, NULL, '2022-11-05 16:04:06', 71, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-archive","type":"0","parentId":"1588790707383046144","level":"2","sortOrder":"4","buttonType":"","status":"0","title":"我的出租交易","component":"house/leaseOrderBySeller/index","name":"leaseOrderBySeller","path":"leaseOrderBySeller"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804334374752256, NULL, '2022-11-05 16:04:07', 0, NULL, '2022-11-05 16:04:07', 33, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804334378946560, NULL, '2022-11-05 16:04:07', 0, NULL, '2022-11-05 16:04:07', 74, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804334534135808, NULL, '2022-11-05 16:04:07', 0, NULL, '2022-11-05 16:04:07', 73, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804342255849472, NULL, '2022-11-05 16:04:08', 0, NULL, '2022-11-05 16:04:08', 27, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588788031622615040"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804410656559104, NULL, '2022-11-05 16:04:25', 0, NULL, '2022-11-05 16:04:25', 70, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790211800862720"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804513937100800, NULL, '2022-11-05 16:04:49', 0, NULL, '2022-11-05 16:04:49', 79, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-basketball","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"5","buttonType":"","status":"0","title":"我的销售交易","component":"house/sellOrderByUser/index","name":"sellOrderByUser","path":"sellOrderByUser"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804515656765441, NULL, '2022-11-05 16:04:50', 0, NULL, '2022-11-05 16:04:50', 29, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804515660959744, NULL, '2022-11-05 16:04:50', 0, NULL, '2022-11-05 16:04:50', 58, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804515778400256, NULL, '2022-11-05 16:04:50', 0, NULL, '2022-11-05 16:04:50', 55, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804589778505728, NULL, '2022-11-05 16:05:07', 0, NULL, '2022-11-05 16:05:07', 62, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-calculator","type":"0","parentId":"1588790211800862720","level":"2","sortOrder":"6","buttonType":"","status":"0","title":"我的出租交易","component":"house/leaseOrderByUser/index","name":"leaseOrderByUser","path":"leaseOrderByUser"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804591519141888, NULL, '2022-11-05 16:05:08', 0, NULL, '2022-11-05 16:05:08', 34, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804591540113408, NULL, '2022-11-05 16:05:08', 0, NULL, '2022-11-05 16:05:08', 81, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804591749828608, NULL, '2022-11-05 16:05:08', 0, NULL, '2022-11-05 16:05:08', 90, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804653762613249, NULL, '2022-11-05 16:05:23', 0, NULL, '2022-11-05 16:05:23', 74, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790012172963840"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804735840948224, NULL, '2022-11-05 16:05:42', 0, NULL, '2022-11-05 16:05:42', 75, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"ios-basket","type":"0","parentId":"1588790012172963840","level":"2","sortOrder":"2","buttonType":"","status":"0","title":"房屋出租维护","component":"house/houseLease/index","name":"houseLease","path":"houseLease"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804736872747008, NULL, '2022-11-05 16:05:43', 0, NULL, '2022-11-05 16:05:43', 32, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804737531252736, NULL, '2022-11-05 16:05:43', 0, NULL, '2022-11-05 16:05:43', 31, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588804737648693248, NULL, '2022-11-05 16:05:43', 0, NULL, '2022-11-05 16:05:43', 56, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805798132322304, NULL, '2022-11-05 16:09:56', 0, NULL, '2022-11-05 16:09:56', 174, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-analytics","type":"0","parentId":"1588790012172963840","level":"2","sortOrder":"3","buttonType":"","status":"0","title":"销售订单维护","path":"customerSell","component":"house/customerSell/index","name":"customerSell"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805799248007168, NULL, '2022-11-05 16:09:56', 0, NULL, '2022-11-05 16:09:56', 50, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805800434995200, NULL, '2022-11-05 16:09:56', 0, NULL, '2022-11-05 16:09:56', 39, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805800699236352, NULL, '2022-11-05 16:09:56', 0, NULL, '2022-11-05 16:09:56', 100, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805803576528896, NULL, '2022-11-05 16:09:57', 0, NULL, '2022-11-05 16:09:57', 28, '127.0.0.1', '本地测试', '查询菜单权限拥有者', '{"permissionId":"1588790012172963840"}', 'GET', '/zwz/permission/getUserByPermission', 'admin', 2, 'PERMISSION-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805867384475648, NULL, '2022-11-05 16:10:12', 0, NULL, '2022-11-05 16:10:12', 72, '127.0.0.1', '本地测试', '添加菜单', '{"icon":"md-appstore","type":"0","parentId":"1588790012172963840","level":"2","sortOrder":"4","buttonType":"","status":"0","title":"出租订单维护","component":"house/customerLease/index","name":"customerLease","path":"customerLease"}', 'POST', '/zwz/permission/add', 'admin', 2, 'PERMISSION-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805868458217472, NULL, '2022-11-05 16:10:12', 0, NULL, '2022-11-05 16:10:12', 27, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805869179637760, NULL, '2022-11-05 16:10:12', 0, NULL, '2022-11-05 16:10:12', 24, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805869318049792, NULL, '2022-11-05 16:10:13', 0, NULL, '2022-11-05 16:10:13', 58, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805911189786624, NULL, '2022-11-05 16:10:23', 0, NULL, '2022-11-05 16:10:23', 123, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805940239536128, NULL, '2022-11-05 16:10:29', 0, NULL, '2022-11-05 16:10:29', 71, '127.0.0.1', '本地测试', '编辑角色', '{"id":"496138616573953","updateBy":"admin","updateTime":"2022-03-20 09:46:20","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","name":"ROLE_USER","dataType":"0","defaultRole":"true","description":"买家","_index":"1","_rowKey":"2"}', 'POST', '/zwz/role/edit', 'admin', 2, 'ROLE-06', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805941246169088, NULL, '2022-11-05 16:10:30', 0, NULL, '2022-11-05 16:10:30', 28, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805978760024064, NULL, '2022-11-05 16:10:39', 0, NULL, '2022-11-05 16:10:39', 69, '127.0.0.1', '本地测试', '新增角色', '{"updateBy":"admin","updateTime":"2022-03-20 09:46:20","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","name":"ROLE_SELLER","dataType":"0","defaultRole":"true","description":"卖家","_index":"1","_rowKey":"2"}', 'POST', '/zwz/role/save', 'admin', 2, 'ROLE-05', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588805980601323520, NULL, '2022-11-05 16:10:39', 0, NULL, '2022-11-05 16:10:39', 61, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806017494421504, NULL, '2022-11-05 16:10:48', 0, NULL, '2022-11-05 16:10:48', 92, '127.0.0.1', '本地测试', '修改菜单权限', '{"roleId":"496138616573952","permIds":"125909152017944576,1464484663442673664,5129710648430593,1464485105081913345,40238597734928384,1464485485316542465,56309618086776832,5129710648430592,5129710648430594,5129710648430595,1530689520276738048,1530689602321518592,39915540965232640,41363147411427328,1535166254703316992,1535166438371889152,1588788031622615040,1588790012172963840,1588790107618545664,1588804735811588096,1588805798111350784,1588805867338338304,1536599942410407936,1536600125332393984,1536600268379131904,1536604417711804416,1536606273959759872,1536606372668510208,1536606464712511488,1536606550951596032,1536606637815631872,1536875505901506560"}', 'POST', '/zwz/role/editRolePerm', 'admin', 2, 'ROLE-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806019188920320, NULL, '2022-11-05 16:10:48', 0, NULL, '2022-11-05 16:10:48', 32, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806019281195008, NULL, '2022-11-05 16:10:48', 0, NULL, '2022-11-05 16:10:48', 59, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806073920393216, NULL, '2022-11-05 16:11:01', 0, NULL, '2022-11-05 16:11:01', 93, '127.0.0.1', '本地测试', '修改菜单权限', '{"roleId":"496138616573953","permIds":"1588788031622615040,1588790211800862720,1588790321746153472,1588790412640915456,1588790562918633472,1588790631667470336,1588804513911934976,1588804589736562688,1536599942410407936,1536600125332393984,1536600268379131904,1536604417711804416,1536606273959759872,1536606372668510208,1536606464712511488,1536606550951596032,1536606637815631872,1536875505901506560"}', 'POST', '/zwz/role/editRolePerm', 'admin', 2, 'ROLE-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806075564560384, NULL, '2022-11-05 16:11:02', 0, NULL, '2022-11-05 16:11:02', 42, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806075631669248, NULL, '2022-11-05 16:11:02', 0, NULL, '2022-11-05 16:11:02', 93, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806122393964544, NULL, '2022-11-05 16:11:13', 0, NULL, '2022-11-05 16:11:13', 97, '127.0.0.1', '本地测试', '修改菜单权限', '{"roleId":"1588805978739052544","permIds":"1588788031622615040,1588790707383046144,1588790791621447680,1588790877353021440,1588804266909372416,1588804332646699008,1536599942410407936,1536600125332393984,1536600268379131904,1536604417711804416,1536606273959759872,1536606372668510208,1536606464712511488,1536606550951596032,1536606637815631872,1536875505901506560"}', 'POST', '/zwz/role/editRolePerm', 'admin', 2, 'ROLE-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806124067491846, NULL, '2022-11-05 16:11:13', 0, NULL, '2022-11-05 16:11:13', 35, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588806124172349440, NULL, '2022-11-05 16:11:13', 0, NULL, '2022-11-05 16:11:13', 63, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588807360611225600, NULL, '2022-11-05 16:16:08', 0, NULL, '2022-11-05 16:16:08', 88, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588807361529778176, NULL, '2022-11-05 16:16:08', 0, NULL, '2022-11-05 16:16:08', 49, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588807365027827712, NULL, '2022-11-05 16:16:09', 0, NULL, '2022-11-05 16:16:09', 81, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808334830604288, NULL, '2022-11-05 16:20:00', 0, NULL, '2022-11-05 16:20:00', 85, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808910293307398, NULL, '2022-11-05 16:22:18', 0, NULL, '2022-11-05 16:22:18', 58, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808916299550720, NULL, '2022-11-05 16:22:19', 0, NULL, '2022-11-05 16:22:19', 22, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808916358270976, NULL, '2022-11-05 16:22:19', 0, NULL, '2022-11-05 16:22:19', 59, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808916412796928, NULL, '2022-11-05 16:22:19', 0, NULL, '2022-11-05 16:22:19', 51, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808916442157056, NULL, '2022-11-05 16:22:19', 0, NULL, '2022-11-05 16:22:19', 67, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808917457178624, NULL, '2022-11-05 16:22:19', 0, NULL, '2022-11-05 16:22:19', 42, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808964987031552, NULL, '2022-11-05 16:22:31', 0, NULL, '2022-11-05 16:22:31', 63, '127.0.0.1', '本地测试', '管理员修改资料', '{"id":"1464772465946398721","updateBy":"admin","updateTime":"2022-05-21 09:53:33","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","nickname":"测试2","username":"17859654121","password":"","passStrength":"","mobile":"17859654121","departmentId":"1464487432169852929","departmentTitle":"综合发展部","email":"17859654121@qq.com","sex":"","address":"[\\"110000\\",\\"110100\\",\\"110105\\"]","type":"0","myDoor":"","status":"0","avatar":"https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0","defaultRole":"","_index":"3","_rowKey":"23","addressArray":"110000,110100,110105","roleIds":"1588805978739052544"}', 'POST', '/zwz/user/admin/edit', 'admin', 2, 'USER-11', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588808966677336064, NULL, '2022-11-05 16:22:31', 0, NULL, '2022-11-05 16:22:31', 41, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809020897103872, NULL, '2022-11-05 16:22:44', 0, NULL, '2022-11-05 16:22:44', 75, '127.0.0.1', '本地测试', '管理员修改资料', '{"id":"1464764315201572865","updateBy":"admin","updateTime":"2022-05-21 09:11:48","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","nickname":"测试","username":"17859654125","password":"","passStrength":"","mobile":"17859654125","departmentId":"1464487332064399361","departmentTitle":"行政综合部","email":"17859654125@qq.com","sex":"女","address":"","type":"0","myDoor":"","status":"-1","avatar":"https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0","defaultRole":"","_index":"2","_rowKey":"26","addressArray":"","roleIds":"496138616573953"}', 'POST', '/zwz/user/admin/edit', 'admin', 2, 'USER-11', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809022583214080, NULL, '2022-11-05 16:22:44', 0, NULL, '2022-11-05 16:22:44', 35, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809149771288576, NULL, '2022-11-05 16:23:15', 0, NULL, '2022-11-05 16:23:15', 98, '127.0.0.1', '本地测试', '管理员修改资料', '{"id":"1464772465946398721","updateBy":"admin","updateTime":"2022-11-05 16:22:31","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","nickname":"测试2","username":"17859654121","password":"","passStrength":"","mobile":"17859654121","departmentId":"1464487432169852929","departmentTitle":"综合发展部","email":"17859654121@qq.com","sex":"女","address":"[\\"110000\\",\\"110100\\",\\"110105\\"]","type":"0","myDoor":"","status":"0","avatar":"https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0","defaultRole":"","_index":"3","_rowKey":"31","addressArray":"110000,110100,110105","roleIds":"1588805978739052544"}', 'POST', '/zwz/user/admin/edit', 'admin', 2, 'USER-11', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809151600005121, NULL, '2022-11-05 16:23:15', 0, NULL, '2022-11-05 16:23:15', 42, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809187180285952, NULL, '2022-11-05 16:23:24', 0, NULL, '2022-11-05 16:23:24', 80, '127.0.0.1', '本地测试', '启用用户', '{"id":"1464764315201572865"}', 'POST', '/zwz/user/enable', 'admin', 2, 'USER-14', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809188925116416, NULL, '2022-11-05 16:23:24', 0, NULL, '2022-11-05 16:23:24', 40, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809194822307840, NULL, '2022-11-05 16:23:25', 0, NULL, '2022-11-05 16:23:25', 36, '127.0.0.1', '本地测试', '禁用用户', '{"id":"1527830053524738048"}', 'POST', '/zwz/user/disable', 'admin', 2, 'USER-13', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809196445503488, NULL, '2022-11-05 16:23:26', 0, NULL, '2022-11-05 16:23:26', 47, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809221619716098, NULL, '2022-11-05 16:23:32', 0, NULL, '2022-11-05 16:23:32', 65, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809236903759872, NULL, '2022-11-05 16:23:35', 0, NULL, '2022-11-05 16:23:35', 93, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809238736670720, NULL, '2022-11-05 16:23:36', 0, NULL, '2022-11-05 16:23:36', 33, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809240036904960, NULL, '2022-11-05 16:23:36', 0, NULL, '2022-11-05 16:23:36', 30, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809240045293574, NULL, '2022-11-05 16:23:36', 0, NULL, '2022-11-05 16:23:36', 25, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809240066265088, NULL, '2022-11-05 16:23:36', 0, NULL, '2022-11-05 16:23:36', 72, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809240175316992, NULL, '2022-11-05 16:23:36', 0, NULL, '2022-11-05 16:23:36', 35, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809286828560384, NULL, '2022-11-05 16:23:47', 0, NULL, '2022-11-05 16:23:47', 89, '127.0.0.1', '本地测试', '管理员修改资料', '{"id":"1464764315201572865","updateBy":"admin","updateTime":"2022-11-05 16:23:24","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","nickname":"测试买家","username":"17859654125","password":"","passStrength":"","mobile":"17859654125","departmentId":"1464487332064399361","departmentTitle":"行政综合部","email":"17859654125@qq.com","sex":"女","address":"","type":"0","myDoor":"","status":"0","avatar":"https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0","defaultRole":"","_index":"2","_rowKey":"51","addressArray":"","roleIds":"496138616573953"}', 'POST', '/zwz/user/admin/edit', 'admin', 2, 'USER-11', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809287931662336, NULL, '2022-11-05 16:23:48', 0, NULL, '2022-11-05 16:23:48', 38, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809309670739968, NULL, '2022-11-05 16:23:53', 0, NULL, '2022-11-05 16:23:53', 80, '127.0.0.1', '本地测试', '管理员修改资料', '{"id":"1464772465946398721","updateBy":"admin","updateTime":"2022-11-05 16:23:15","createBy":"","createTime":"2022-03-20 09:46:20","delFlag":"0","nickname":"测试卖家","username":"17859654121","password":"","passStrength":"","mobile":"17859654121","departmentId":"1464487432169852929","departmentTitle":"综合发展部","email":"17859654121@qq.com","sex":"女","address":"[\\"110000\\",\\"110100\\",\\"110105\\"]","type":"0","myDoor":"","status":"0","avatar":"https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0","defaultRole":"","_index":"3","_rowKey":"56","addressArray":"110000,110100,110105","roleIds":"1588805978739052544"}', 'POST', '/zwz/user/admin/edit', 'admin', 2, 'USER-11', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809311377821696, NULL, '2022-11-05 16:23:53', 0, NULL, '2022-11-05 16:23:53', 38, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809338640797696, NULL, '2022-11-05 16:24:00', 0, NULL, '2022-11-05 16:24:00', 72, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654125","password":"","code":"1788","captchaId":"71c846b5e28b4488b2ff4f9b42212b81","saveLogin":"true"}', 'POST', '/zwz/login', '17859654125', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809338661769216, NULL, '2022-11-05 16:24:00', 0, NULL, '2022-11-05 16:24:00', 59, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654125', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809339001507840, NULL, '2022-11-05 16:24:00', 0, NULL, '2022-11-05 16:24:00', 46, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588809339211223040, NULL, '2022-11-05 16:24:00', 0, NULL, '2022-11-05 16:24:00', 41, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654125', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811418361270272, NULL, '2022-11-05 16:32:16', 0, NULL, '2022-11-05 16:32:16', 69, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"2437","captchaId":"b0175776945d42d8a6c5c05ccafaab1f","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811419699253248, NULL, '2022-11-05 16:32:16', 0, NULL, '2022-11-05 16:32:16', 35, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811420890435584, NULL, '2022-11-05 16:32:16', 0, NULL, '2022-11-05 16:32:16', 48, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811428410822656, NULL, '2022-11-05 16:32:18', 0, NULL, '2022-11-05 16:32:18', 34, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811428763144192, NULL, '2022-11-05 16:32:18', 0, NULL, '2022-11-05 16:32:18', 31, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588811527341871104, NULL, '2022-11-05 16:32:42', 0, NULL, '2022-11-05 16:32:42', 67, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813090617692169, NULL, '2022-11-05 16:38:54', 0, NULL, '2022-11-05 16:38:54', 77, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813093054582786, NULL, '2022-11-05 16:38:55', 0, NULL, '2022-11-05 16:38:55', 168, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813093172023296, NULL, '2022-11-05 16:38:55', 0, NULL, '2022-11-05 16:38:55', 307, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813093184606208, NULL, '2022-11-05 16:38:55', 0, NULL, '2022-11-05 16:38:55', 463, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813093234937856, NULL, '2022-11-05 16:38:55', 0, NULL, '2022-11-05 16:38:55', 674, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813094325456896, NULL, '2022-11-05 16:38:55', 0, NULL, '2022-11-05 16:38:55', 109, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813127103942656, NULL, '2022-11-05 16:39:03', 0, NULL, '2022-11-05 16:39:03', 152, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654125","password":"","code":"8081","captchaId":"b5ad3c67b5594990967b8fd247217c2f","saveLogin":"true"}', 'POST', '/zwz/login', '17859654125', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813127124914176, NULL, '2022-11-05 16:39:03', 0, NULL, '2022-11-05 16:39:03', 56, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654125', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813127401738240, NULL, '2022-11-05 16:39:03', 0, NULL, '2022-11-05 16:39:03', 24, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813127686950912, NULL, '2022-11-05 16:39:03', 0, NULL, '2022-11-05 16:39:03', 28, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654125', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813704164675584, NULL, '2022-11-05 16:41:21', 0, NULL, '2022-11-05 16:41:21', 80, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"6055","captchaId":"7c2782049b464dd2818ad3a0de811c3d","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813704202424320, NULL, '2022-11-05 16:41:21', 0, NULL, '2022-11-05 16:41:21', 77, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813704680574976, NULL, '2022-11-05 16:41:21', 0, NULL, '2022-11-05 16:41:21', 47, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813705087422464, NULL, '2022-11-05 16:41:21', 0, NULL, '2022-11-05 16:41:21', 43, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813713673162752, NULL, '2022-11-05 16:41:23', 0, NULL, '2022-11-05 16:41:23', 39, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813714981785600, NULL, '2022-11-05 16:41:23', 0, NULL, '2022-11-05 16:41:23', 32, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813714990174213, NULL, '2022-11-05 16:41:23', 0, NULL, '2022-11-05 16:41:23', 32, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813715002757121, NULL, '2022-11-05 16:41:23', 0, NULL, '2022-11-05 16:41:23', 74, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813715157946374, NULL, '2022-11-05 16:41:23', 0, NULL, '2022-11-05 16:41:23', 37, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813755754614784, NULL, '2022-11-05 16:41:33', 0, NULL, '2022-11-05 16:41:33', 85, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813756970962945, NULL, '2022-11-05 16:41:33', 0, NULL, '2022-11-05 16:41:33', 48, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813780953993216, NULL, '2022-11-05 16:41:39', 0, NULL, '2022-11-05 16:41:39', 94, '127.0.0.1', '本地测试', '修改菜单权限', '{"roleId":"496138616573952","permIds":"125909152017944576,1464484663442673664,5129710648430593,1464485105081913345,40238597734928384,1464485485316542465,56309618086776832,5129710648430592,5129710648430594,5129710648430595,1530689520276738048,1530689602321518592,39915540965232640,41363147411427328,1535166254703316992,1535166438371889152,1588788031622615040,1588790012172963840,1588790107618545664,1588804735811588096,1588805798111350784,1588805867338338304,1588790707383046144,1588790791621447680,1588790877353021440,1588804266909372416,1588804332646699008,1536599942410407936,1536600125332393984,1536600268379131904,1536604417711804416,1536606273959759872,1536606372668510208,1536606464712511488,1536606550951596032,1536606637815631872,1536875505901506560"}', 'POST', '/zwz/role/editRolePerm', 'admin', 2, 'ROLE-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813782837235713, NULL, '2022-11-05 16:41:39', 0, NULL, '2022-11-05 16:41:39', 60, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813782992424960, NULL, '2022-11-05 16:41:39', 0, NULL, '2022-11-05 16:41:39', 92, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813788583432192, NULL, '2022-11-05 16:41:41', 0, NULL, '2022-11-05 16:41:41', 38, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813835169566720, NULL, '2022-11-05 16:41:52', 0, NULL, '2022-11-05 16:41:52', 89, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813844153765888, NULL, '2022-11-05 16:41:54', 0, NULL, '2022-11-05 16:41:54', 34, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813844170543104, NULL, '2022-11-05 16:41:54', 0, NULL, '2022-11-05 16:41:54', 79, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813844195708928, NULL, '2022-11-05 16:41:54', 0, NULL, '2022-11-05 16:41:54', 61, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813844237651968, NULL, '2022-11-05 16:41:54', 0, NULL, '2022-11-05 16:41:54', 98, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813845219119104, NULL, '2022-11-05 16:41:54', 0, NULL, '2022-11-05 16:41:54', 36, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813869772574720, NULL, '2022-11-05 16:42:00', 0, NULL, '2022-11-05 16:42:00', 67, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"2676","captchaId":"b75cb064813743eca07128dede99ff17","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813869810323456, NULL, '2022-11-05 16:42:00', 0, NULL, '2022-11-05 16:42:00', 54, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813870221365248, NULL, '2022-11-05 16:42:00', 0, NULL, '2022-11-05 16:42:00', 52, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813870439469056, NULL, '2022-11-05 16:42:00', 0, NULL, '2022-11-05 16:42:00', 26, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813914781650944, NULL, '2022-11-05 16:42:11', 0, NULL, '2022-11-05 16:42:11', 67, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"0307","captchaId":"9b1d8c9664464e1f915ac6b922a2df62","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813914819399680, NULL, '2022-11-05 16:42:11', 0, NULL, '2022-11-05 16:42:11', 76, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813915284967424, NULL, '2022-11-05 16:42:11', 0, NULL, '2022-11-05 16:42:11', 36, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813923430305792, NULL, '2022-11-05 16:42:13', 0, NULL, '2022-11-05 16:42:13', 32, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588813923900067840, NULL, '2022-11-05 16:42:13', 0, NULL, '2022-11-05 16:42:13', 31, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814075259916289, NULL, '2022-11-05 16:42:49', 0, NULL, '2022-11-05 16:42:49', 81, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814075268304896, NULL, '2022-11-05 16:42:49', 0, NULL, '2022-11-05 16:42:49', 95, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814075276693510, NULL, '2022-11-05 16:42:49', 0, NULL, '2022-11-05 16:42:49', 65, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814076576927744, NULL, '2022-11-05 16:42:49', 0, NULL, '2022-11-05 16:42:49', 28, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814076887306240, NULL, '2022-11-05 16:42:49', 0, NULL, '2022-11-05 16:42:49', 26, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814102577418240, NULL, '2022-11-05 16:42:56', 0, NULL, '2022-11-05 16:42:56', 57, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"1235","captchaId":"6ab78da6c4e644b3b3f7084f25e2f799","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814102619361280, NULL, '2022-11-05 16:42:56', 0, NULL, '2022-11-05 16:42:56', 65, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814102929739776, NULL, '2022-11-05 16:42:56', 0, NULL, '2022-11-05 16:42:56', 28, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814103198175233, NULL, '2022-11-05 16:42:56', 0, NULL, '2022-11-05 16:42:56', 27, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814178766950400, NULL, '2022-11-05 16:43:14', 0, NULL, '2022-11-05 16:43:14', 76, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"4267","captchaId":"55029d0ffc07442eb4225984e8889d2f","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814178800504832, NULL, '2022-11-05 16:43:14', 0, NULL, '2022-11-05 16:43:14', 68, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814179383513088, NULL, '2022-11-05 16:43:14', 0, NULL, '2022-11-05 16:43:14', 76, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814179647754241, NULL, '2022-11-05 16:43:14', 0, NULL, '2022-11-05 16:43:14', 31, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814401551601664, NULL, '2022-11-05 16:44:07', 0, NULL, '2022-11-05 16:44:07', 68, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814479876034560, NULL, '2022-11-05 16:44:25', 0, NULL, '2022-11-05 16:44:25', 68, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"5585","captchaId":"b44174fa3e0245a2a2a56cf518172db6","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814481201434624, NULL, '2022-11-05 16:44:26', 0, NULL, '2022-11-05 16:44:26', 35, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814482371645440, NULL, '2022-11-05 16:44:26', 0, NULL, '2022-11-05 16:44:26', 46, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588814482715578368, NULL, '2022-11-05 16:44:26', 0, NULL, '2022-11-05 16:44:26', 35, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588815580570456064, NULL, '2022-11-05 16:48:48', 0, NULL, '2022-11-05 16:48:48', 59, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"2441","captchaId":"42508f6036f94f65af4ba1cbf05a93ae","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588815580612399104, NULL, '2022-11-05 16:48:48', 0, NULL, '2022-11-05 16:48:48', 53, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588815580897611776, NULL, '2022-11-05 16:48:48', 0, NULL, '2022-11-05 16:48:48', 26, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588815582680190977, NULL, '2022-11-05 16:48:48', 0, NULL, '2022-11-05 16:48:48', 28, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588816024365568000, NULL, '2022-11-05 16:50:34', 0, NULL, '2022-11-05 16:50:34', 63, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588816963948384256, NULL, '2022-11-05 16:54:18', 0, NULL, '2022-11-05 16:54:18', 427, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588816989252620288, NULL, '2022-11-05 16:54:24', 0, NULL, '2022-11-05 16:54:24', 99, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817007942438912, NULL, '2022-11-05 16:54:28', 0, NULL, '2022-11-05 16:54:28', 45, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817366358298624, NULL, '2022-11-05 16:55:54', 0, NULL, '2022-11-05 16:55:54', 85, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"5101","captchaId":"2a9a2f7abd224f36b05935ad7e3f25af","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817366391853056, NULL, '2022-11-05 16:55:54', 0, NULL, '2022-11-05 16:55:54', 85, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817367390097408, NULL, '2022-11-05 16:55:54', 0, NULL, '2022-11-05 16:55:54', 161, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817367734030336, NULL, '2022-11-05 16:55:54', 0, NULL, '2022-11-05 16:55:54', 62, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817383970181120, NULL, '2022-11-05 16:55:58', 0, NULL, '2022-11-05 16:55:58', 89, '127.0.0.1', '本地测试', '查询全部菜单', '{}', 'GET', '/zwz/permission/getAllList', 'admin', 2, 'PERMISSION-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817385098448896, NULL, '2022-11-05 16:55:58', 0, NULL, '2022-11-05 16:55:58', 50, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/permission_type', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817388848156672, NULL, '2022-11-05 16:55:59', 0, NULL, '2022-11-05 16:55:59', 44, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817408137760768, NULL, '2022-11-05 16:56:04', 0, NULL, '2022-11-05 16:56:04', 49, '127.0.0.1', '本地测试', '修改菜单权限', '{"roleId":"496138616573952","permIds":"125909152017944576,1464484663442673664,5129710648430593,1464485105081913345,40238597734928384,1464485485316542465,56309618086776832,5129710648430592,5129710648430594,5129710648430595,1530689520276738048,1530689602321518592,39915540965232640,41363147411427328,1535166254703316992,1535166438371889152,1588788031622615040,1588790012172963840,1588790107618545664,1588804735811588096,1588805798111350784,1588805867338338304,1536599942410407936,1536600125332393984,1536600268379131904,1536604417711804416,1536606273959759872,1536606372668510208,1536606464712511488,1536606550951596032,1536606637815631872,1536875505901506560"}', 'POST', '/zwz/role/editRolePerm', 'admin', 2, 'ROLE-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817409723207681, NULL, '2022-11-05 16:56:04', 0, NULL, '2022-11-05 16:56:04', 52, '127.0.0.1', '本地测试', '查询角色', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/role/getAllByPage', 'admin', 2, 'ROLE-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817409823870976, NULL, '2022-11-05 16:56:04', 0, NULL, '2022-11-05 16:56:04', 113, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817412629860352, NULL, '2022-11-05 16:56:05', 0, NULL, '2022-11-05 16:56:05', 44, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817419277832192, NULL, '2022-11-05 16:56:06', 0, NULL, '2022-11-05 16:56:06', 38, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817419307192320, NULL, '2022-11-05 16:56:06', 0, NULL, '2022-11-05 16:56:06', 48, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817419403661312, NULL, '2022-11-05 16:56:06', 0, NULL, '2022-11-05 16:56:06', 86, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817419479158784, NULL, '2022-11-05 16:56:06', 0, NULL, '2022-11-05 16:56:06', 84, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817420297048064, NULL, '2022-11-05 16:56:06', 0, NULL, '2022-11-05 16:56:06', 40, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817441033687040, NULL, '2022-11-05 16:56:11', 0, NULL, '2022-11-05 16:56:11', 27, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654125","password":"","code":"3145","captchaId":"5dceffbc62cd4479a514ee5bd4fdc20f","saveLogin":"true"}', 'POST', '/zwz/login', '17859654125', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817441079824384, NULL, '2022-11-05 16:56:11', 0, NULL, '2022-11-05 16:56:11', 84, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654125', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817441654444032, NULL, '2022-11-05 16:56:12', 0, NULL, '2022-11-05 16:56:12', 66, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817442199703552, NULL, '2022-11-05 16:56:12', 0, NULL, '2022-11-05 16:56:12', 40, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654125', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817537691422720, NULL, '2022-11-05 16:56:35', 0, NULL, '2022-11-05 16:56:35', 63, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"3064","captchaId":"c9b66017ce4f4a8d9a2ace5a3346a604","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817537733365760, NULL, '2022-11-05 16:56:35', 0, NULL, '2022-11-05 16:56:35', 51, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817538010189824, NULL, '2022-11-05 16:56:35', 0, NULL, '2022-11-05 16:56:35', 27, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817538660306944, NULL, '2022-11-05 16:56:35', 0, NULL, '2022-11-05 16:56:35', 40, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817747427594240, NULL, '2022-11-05 16:57:25', 0, NULL, '2022-11-05 16:57:25', 76, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817752540450818, NULL, '2022-11-05 16:57:26', 0, NULL, '2022-11-05 16:57:26', 21, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817752548839424, NULL, '2022-11-05 16:57:26', 0, NULL, '2022-11-05 16:57:26', 59, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817752561422336, NULL, '2022-11-05 16:57:26', 0, NULL, '2022-11-05 16:57:26', 59, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817752565616640, NULL, '2022-11-05 16:57:26', 0, NULL, '2022-11-05 16:57:26', 72, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817753689690112, NULL, '2022-11-05 16:57:26', 0, NULL, '2022-11-05 16:57:26', 39, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817779711152128, NULL, '2022-11-05 16:57:32', 0, NULL, '2022-11-05 16:57:32', 71, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"2133","captchaId":"106a3d99602542918efbd0f5a196ef83","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817779748900864, NULL, '2022-11-05 16:57:32', 0, NULL, '2022-11-05 16:57:32', 54, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817780080250880, NULL, '2022-11-05 16:57:32', 0, NULL, '2022-11-05 16:57:32', 41, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817780617121792, NULL, '2022-11-05 16:57:32', 0, NULL, '2022-11-05 16:57:32', 41, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817809125806080, NULL, '2022-11-05 16:57:39', 0, NULL, '2022-11-05 16:57:39', 60, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817968450637824, NULL, '2022-11-05 16:58:17', 0, NULL, '2022-11-05 16:58:17', 59, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654125","password":"","code":"7226","captchaId":"fc3fd5c30ab6404888a0cb28cdbc49f5","saveLogin":"true"}', 'POST', '/zwz/login', '17859654125', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817968500969472, NULL, '2022-11-05 16:58:17', 0, NULL, '2022-11-05 16:58:17', 72, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654125', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817968865873920, NULL, '2022-11-05 16:58:17', 0, NULL, '2022-11-05 16:58:17', 32, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588817970744922112, NULL, '2022-11-05 16:58:18', 0, NULL, '2022-11-05 16:58:18', 31, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654125', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818517480837120, NULL, '2022-11-05 17:00:28', 0, NULL, '2022-11-05 17:00:28', 77, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818521289265152, NULL, '2022-11-05 17:00:29', 0, NULL, '2022-11-05 17:00:29', 38, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818528708988928, NULL, '2022-11-05 17:00:31', 0, NULL, '2022-11-05 17:00:31', 34, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654125', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818771169120256, NULL, '2022-11-05 17:01:29', 0, NULL, '2022-11-05 17:01:29', 70, '127.0.0.1', '本地测试', '登录系统', '{"username":"17859654121","password":"","code":"8184","captchaId":"1007b4e28dfb46dc961e3c9cec551997","saveLogin":"true"}', 'POST', '/zwz/login', '17859654121', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818771206868992, NULL, '2022-11-05 17:01:29', 0, NULL, '2022-11-05 17:01:29', 75, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', '17859654121', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818771676631040, NULL, '2022-11-05 17:01:29', 0, NULL, '2022-11-05 17:01:29', 46, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', '17859654121', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818773421461504, NULL, '2022-11-05 17:01:29', 0, NULL, '2022-11-05 17:01:29', 36, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', '17859654121', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818856107970560, NULL, '2022-11-05 17:01:49', 0, NULL, '2022-11-05 17:01:49', 73, '127.0.0.1', '本地测试', '登录系统', '{"username":"admin","password":"","code":"4572","captchaId":"d86adbe59e824f26af6d6ccc9c90d954","saveLogin":"true"}', 'POST', '/zwz/login', 'admin', 1, '', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818856154107904, NULL, '2022-11-05 17:01:49', 0, NULL, '2022-11-05 17:01:49', 65, '127.0.0.1', '本地测试', '获取当前登录用户', '{}', 'GET', '/zwz/user/info', 'admin', 2, 'USER-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818856477069312, NULL, '2022-11-05 17:01:49', 0, NULL, '2022-11-05 17:01:49', 33, '127.0.0.1', '本地测试', '查询菜单', '{}', 'GET', '/zwz/permission/getMenuList', 'admin', 2, 'PERMISSION-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818857198489600, NULL, '2022-11-05 17:01:49', 0, NULL, '2022-11-05 17:01:49', 43, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818862835634176, NULL, '2022-11-05 17:01:50', 0, NULL, '2022-11-05 17:01:50', 32, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818864165228544, NULL, '2022-11-05 17:01:51', 0, NULL, '2022-11-05 17:01:51', 29, '127.0.0.1', '本地测试', '查询全部角色', '{}', 'GET', '/zwz/role/getAllList', 'admin', 2, 'ROLE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818864177811458, NULL, '2022-11-05 17:01:51', 0, NULL, '2022-11-05 17:01:51', 37, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818864215560192, NULL, '2022-11-05 17:01:51', 0, NULL, '2022-11-05 17:01:51', 81, '127.0.0.1', '本地测试', '查询用户', '{"nickname":"","departmentId":"","pageNumber":"1","pageSize":"20","sort":"createTime","order":"desc"}', 'GET', '/zwz/user/getUserList', 'admin', 2, 'USER-07', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818864316223488, NULL, '2022-11-05 17:01:51', 0, NULL, '2022-11-05 17:01:51', 42, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818928963031042, NULL, '2022-11-05 17:02:06', 0, NULL, '2022-11-05 17:02:06', 99, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818928971419648, NULL, '2022-11-05 17:02:06', 0, NULL, '2022-11-05 17:02:06', 124, '127.0.0.1', '本地测试', '查询用户', '{"pageNumber":"1","pageSize":"10","sort":"createTime","order":"desc","departmentId":""}', 'GET', '/zwz/myUser/getByPage', 'admin', 2, 'USER-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818929906749440, NULL, '2022-11-05 17:02:06', 0, NULL, '2022-11-05 17:02:06', 45, '127.0.0.1', '本地测试', '查询子部门', '{}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818936059793408, NULL, '2022-11-05 17:02:08', 0, NULL, '2022-11-05 17:02:08', 45, '127.0.0.1', '本地测试', '查询子部门', '{"parentId":"1464487379074158593"}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818938555404288, NULL, '2022-11-05 17:02:08', 0, NULL, '2022-11-05 17:02:08', 44, '127.0.0.1', '本地测试', '查询子部门', '{"parentId":"1464487332064399361"}', 'GET', '/zwz/department/getByParentId', 'admin', 2, 'DEP-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818983015026688, NULL, '2022-11-05 17:02:19', 0, NULL, '2022-11-05 17:02:19', 88, '127.0.0.1', '本地测试', '查询系统文件', '{"name":"","fkey":"","type":"","pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc","startDate":"","endDate":""}', 'GET', '/zwz/file/getByCondition', 'admin', 2, 'FILE-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818984222986240, NULL, '2022-11-05 17:02:19', 0, NULL, '2022-11-05 17:02:19', 63, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_HTTP"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818984222986241, NULL, '2022-11-05 17:02:19', 0, NULL, '2022-11-05 17:02:19', 33, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_VIEW"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588818984222986242, NULL, '2022-11-05 17:02:19', 0, NULL, '2022-11-05 17:02:19', 63, '127.0.0.1', '本地测试', '查看单个配置', '{"id":"FILE_PATH"}', 'GET', '/zwz/setting/getOne', 'admin', 2, 'SETTING-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819028795854848, NULL, '2022-11-05 17:02:30', 0, NULL, '2022-11-05 17:02:30', 111, '127.0.0.1', '本地测试', '查询日志', '{"logType":"1","pageNumber":"1","pageSize":"15","startDate":"","endDate":"","sort":"createTime","order":"desc","ipInfo":"","key":""}', 'GET', '/zwz/log/getAllByPage', 'admin', 2, 'LOG-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819072756355072, NULL, '2022-11-05 17:02:41', 0, NULL, '2022-11-05 17:02:41', 80, '127.0.0.1', '本地测试', '查询所有数据字典', '{}', 'GET', '/zwz/dict/getAll', 'admin', 2, 'DICT-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819074165641216, NULL, '2022-11-05 17:02:41', 0, NULL, '2022-11-05 17:02:41', 43, '127.0.0.1', '本地测试', '查询数据字典值', '{"name":"","status":"","pageNumber":"1","pageSize":"10","sort":"sortOrder","order":"asc"}', 'GET', '/zwz/dictData/getByCondition', 'admin', 2, 'DICT_DATA-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819083787374592, NULL, '2022-11-05 17:02:43', 0, NULL, '2022-11-05 17:02:43', 35, '127.0.0.1', '本地测试', '查询数据字典值', '{"name":"","status":"","pageNumber":"1","pageSize":"10","sort":"sortOrder","order":"asc","dictId":"75135930788220928"}', 'GET', '/zwz/dictData/getByCondition', 'admin', 2, 'DICT_DATA-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819115857022976, NULL, '2022-11-05 17:02:51', 0, NULL, '2022-11-05 17:02:51', 88, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819125294206976, NULL, '2022-11-05 17:02:53', 0, NULL, '2022-11-05 17:02:53', 40, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/sex', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819125378093056, NULL, '2022-11-05 17:02:53', 0, NULL, '2022-11-05 17:02:53', 93, '127.0.0.1', '本地测试', '查询学生', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/student/getByPage', 'admin', 3, 'STUDENT-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819131191398403, NULL, '2022-11-05 17:02:55', 0, NULL, '2022-11-05 17:02:55', 310, '127.0.0.1', '本地测试', '查询单个数据字典的值', '{}', 'GET', '/zwz/dictData/getByType/education', 'admin', 2, 'DICT_DATA-01', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819132558741504, NULL, '2022-11-05 17:02:55', 0, NULL, '2022-11-05 17:02:55', 48, '127.0.0.1', '本地测试', '查询教师', '{"pageNumber":"1","pageSize":"15","sort":"createTime","order":"desc"}', 'GET', '/zwz/teacher/getByPage', 'admin', 3, 'TEACHER-04', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016'),
+	(1588819327249944578, NULL, '2022-11-05 17:03:41', 0, NULL, '2022-11-05 17:03:41', 76, '127.0.0.1', '本地测试', '查询个人门户菜单B', '{}', 'POST', '/zwz/myDoor/getMyDoorList6', 'admin', 2, 'MY-DOOR-02', 'PC端 | Chrome 106.0.0.0 | Windows Windows 10 or Windows Server 2016');
+
+DROP TABLE IF EXISTS `a_permission`;
+CREATE TABLE IF NOT EXISTS `a_permission` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `parent_id` bigint unsigned DEFAULT NULL,
+  `type` tinyint(1) DEFAULT NULL,
+  `sort_order` decimal(10,2) DEFAULT NULL,
+  `component` varchar(255) DEFAULT NULL,
+  `path` varchar(255) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
+  `level` int unsigned DEFAULT NULL,
+  `button_type` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `show_always` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_permission`;
+INSERT INTO `a_permission` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `description`, `name`, `parent_id`, `type`, `sort_order`, `component`, `path`, `title`, `icon`, `level`, `button_type`, `status`, `show_always`) VALUES
+	(5129710648430592, '', '2022-03-20 09:46:20', 0, 'admin', '2022-05-29 13:05:28', '', 'roleMenu', 125909152017944576, 0, 4.00, 'Main', '/roleMenu', '权限管理', 'md-desktop', 1, '', 0, b'1'),
+	(5129710648430593, '', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 'user-admin', 1464484663442673664, 0, 1.10, 'roster/user/user', 'user', '用户管理', 'md-person', 2, '', 0, b'1'),
+	(5129710648430594, '', '2022-03-20 09:46:20', 0, 'admin', '2022-06-14 11:23:18', '', 'role-manage', 5129710648430592, 0, 1.00, 'role/role/index', 'role', '角色支持', 'md-contacts', 2, '', 0, b'1'),
+	(5129710648430595, '', '2022-03-20 09:46:20', 0, 'admin', '2022-06-14 11:23:13', '', 'menu-manage', 5129710648430592, 0, 2.00, 'menu/menu/index', 'menu', '菜单支持', 'md-menu', 2, '', 0, b'1'),
+	(39915540965232640, '', '2022-03-20 09:46:20', 0, 'admin', '2022-06-10 15:45:37', '', 'monitor', 125909152017944576, 0, 6.00, 'Main', '/monitor', '日志管理', 'ios-analytics', 1, '', 0, b'1'),
+	(40238597734928384, '', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 'department-admin', 1464485105081913345, 0, 1.20, 'roster/department/department', 'department-admin', '部门管理', 'md-git-branch', 2, '', 0, b'1'),
+	(41363147411427328, '', '2022-03-20 09:46:20', 0, 'admin', '2022-05-21 14:15:44', '', 'log-manage', 39915540965232640, 0, 2.20, 'log/log/index', 'log', '日志管理', 'md-list-box', 2, '', 0, b'1'),
+	(56309618086776832, '', '2022-03-20 09:46:20', 0, 'admin', '2022-05-29 07:18:02', '', 'file-admin', 1464485485316542465, 0, 1.00, 'file/file/index', 'file', '云盘', 'ios-folder', 2, '', 0, b'1'),
+	(125909152017944576, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 'zwz', 0, -1, 1.00, '', '', '数据中心', 'md-home', 0, '', 0, b'1'),
+	(1464484663442673664, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '', 'userTwoMenu', 125909152017944576, 0, 1.00, 'Main', '/userTwoMenu', '用户管理', 'md-analytics', 1, '', 0, b'1'),
+	(1464485105081913345, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', NULL, 'depTwoMenu', 125909152017944576, 0, 2.00, 'Main', '/depTwoMenu', '部门管理', 'ios-apps', 1, '', 0, b'1'),
+	(1464485485316542465, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-05-21 14:13:42', '', 'fileAdmin', 125909152017944576, 0, 3.00, 'Main', '/fileAdmin', '文件管理', 'md-basketball', 1, '', 0, b'1'),
+	(1530689520276738048, 'admin', '2022-05-29 07:16:35', 0, NULL, NULL, NULL, 'dictMenu', 125909152017944576, 0, 5.00, 'Main', '/dictMenu', '数据字典', 'ios-apps', 1, '', 0, b'1'),
+	(1530689602321518592, 'admin', '2022-05-29 07:16:55', 0, NULL, NULL, NULL, 'dict', 1530689520276738048, 0, 1.00, 'dict/dict/index', 'dict', '数据字典', 'ios-apps', 2, '', 0, b'1'),
+	(1535166254703316992, 'admin', '2022-06-10 15:45:32', 0, NULL, NULL, NULL, 'codeCreate', 125909152017944576, 0, 7.00, 'Main', '/codeCreate', '代码生成', 'ios-brush', 1, '', 0, b'1'),
+	(1535166438371889152, 'admin', '2022-06-10 15:46:16', 0, NULL, NULL, NULL, 'vue', 1535166254703316992, 0, 1.00, 'code/vue/index', 'vue', '前端表格', 'md-bug', 2, '', 0, b'1'),
+	(1536599942410407936, 'admin', '2022-06-14 14:42:30', 0, NULL, NULL, NULL, 'demo', 0, -1, 3.00, NULL, NULL, '二次开发', 'md-bulb', 0, NULL, 0, NULL),
+	(1536600125332393984, 'admin', '2022-06-14 14:43:13', 0, 'admin', '2022-06-14 15:10:31', '', 'tableDemo', 1536599942410407936, 0, 1.00, 'Main', '/tableDemo', '数据展示', 'ios-apps', 1, '', 0, NULL),
+	(1536600268379131904, 'admin', '2022-06-14 14:43:47', 0, NULL, NULL, NULL, 'demo1', 1536600125332393984, 0, 1.00, 'demo/demo1/index', 'demo1', '代码生成样例', 'md-finger-print', 2, '', 0, NULL),
+	(1536604417711804416, 'admin', '2022-06-14 15:00:17', 0, 'admin', '2022-06-14 15:31:57', '', 'demo2', 1536600125332393984, 0, 2.00, 'demo/demo2/index', 'demo2', '复杂表格样例', 'md-archive', 2, '', 0, NULL),
+	(1536606273959759872, 'admin', '2022-06-14 15:07:39', 0, 'admin', '2022-06-14 15:10:23', '', 'antv', 1536599942410407936, 0, 2.00, 'Main', '/antv', '图表展示', 'ios-pulse', 1, '', 0, NULL),
+	(1536606372668510208, 'admin', '2022-06-14 15:08:03', 0, NULL, NULL, NULL, 'antv1', 1536606273959759872, 0, 1.00, 'demo/antv1/index', 'antv1', '条形图', 'md-pricetags', 2, '', 0, NULL),
+	(1536606464712511488, 'admin', '2022-06-14 15:08:25', 0, NULL, NULL, NULL, 'antv2', 1536606273959759872, 0, 2.00, 'demo/antv2/index', 'antv2', '饼图', 'md-radio-button-off', 2, '', 0, NULL),
+	(1536606550951596032, 'admin', '2022-06-14 15:08:45', 0, NULL, NULL, NULL, 'antv3', 1536606273959759872, 0, 3.00, 'demo/antv3/index', 'antv3', '折线图', 'ios-nutrition', 2, '', 0, NULL),
+	(1536606637815631872, 'admin', '2022-06-14 15:09:06', 0, NULL, NULL, NULL, 'antv4', 1536606273959759872, 0, 4.00, 'demo/antv4/index', 'antv4', '柱状图', 'ios-phone-portrait', 2, '', 0, NULL),
+	(1536875505901506560, 'admin', '2022-06-15 08:57:29', 0, 'admin', '2022-06-15 09:01:01', '', 'antvActive', 1536606273959759872, 0, 5.00, 'demo/antvActive/index', 'antvActive', '动态图表样例', 'ios-apps', 2, '', 0, NULL),
+	(1588788031622615040, 'admin', '2022-11-05 14:59:20', 0, NULL, NULL, NULL, 'houseTopMenu', 0, -1, 2.00, NULL, NULL, '房屋租售', 'md-aperture', 0, NULL, 0, NULL),
+	(1588790012172963840, 'admin', '2022-11-05 15:07:12', 0, NULL, NULL, NULL, 'adminMenu', 1588788031622615040, 0, 1.00, 'Main', '/adminMenu', '管理员维护', 'md-aperture', 1, '', 0, NULL),
+	(1588790107618545664, 'admin', '2022-11-05 15:07:35', 0, NULL, NULL, NULL, 'houseSell', 1588790012172963840, 0, 1.00, 'house/houseSell/index', 'houseSell', '房屋销售维护', 'md-at', 2, '', 0, NULL),
+	(1588790211800862720, 'admin', '2022-11-05 15:07:59', 0, NULL, NULL, NULL, 'userMenu', 1588788031622615040, 0, 2.00, 'Main', '/userMenu', '买家支持', 'md-card', 1, '', 0, NULL),
+	(1588790321746153472, 'admin', '2022-11-05 15:08:26', 0, NULL, NULL, NULL, 'customerLeaseByUser', 1588790211800862720, 0, 1.00, 'house/customerLeaseByUser/index', 'customerLeaseByUser', '我申请的出租', 'md-call', 2, '', 0, NULL),
+	(1588790412640915456, 'admin', '2022-11-05 15:08:47', 0, NULL, NULL, NULL, 'houseLeaseByUser', 1588790211800862720, 0, 2.00, 'house/houseLeaseByUser/index', 'houseLeaseByUser', '房屋出租浏览', 'ios-apps', 2, '', 0, NULL),
+	(1588790562918633472, 'admin', '2022-11-05 15:09:23', 0, 'admin', '2022-11-05 16:01:40', '', 'houseSellByUser', 1588790211800862720, 0, 3.00, 'house/houseSellByUser/index', 'houseSellByUser', '房屋销售浏览', 'ios-apps', 2, '', 0, NULL),
+	(1588790631667470336, 'admin', '2022-11-05 15:09:40', 0, 'admin', '2022-11-05 16:01:54', '', 'customerSellByUser', 1588790211800862720, 0, 4.00, 'house/customerSellByUser/index', 'customerSellByUser', '我申请的销售', 'md-analytics', 2, '', 0, NULL),
+	(1588790707383046144, 'admin', '2022-11-05 15:09:58', 0, NULL, NULL, NULL, 'sellerMenu', 1588788031622615040, 0, 3.00, 'Main', '/sellerMenu', '卖家支持', 'md-analytics', 1, '', 0, NULL),
+	(1588790791621447680, 'admin', '2022-11-05 15:10:18', 0, NULL, NULL, NULL, 'customerSellBySeller', 1588790707383046144, 0, 1.00, 'house/customerSellBySeller/index', 'customerSellBySeller', '我的销售订单', 'ios-alarm', 2, '', 0, NULL),
+	(1588790877353021440, 'admin', '2022-11-05 15:10:38', 0, NULL, NULL, NULL, 'customerLeaseBySeller', 1588790707383046144, 0, 2.00, 'house/customerLeaseBySeller/index', 'customerLeaseBySeller', '我的出租订单', 'ios-american-football', 2, '', 0, NULL),
+	(1588804266909372416, 'admin', '2022-11-05 16:03:50', 0, NULL, NULL, NULL, 'sellOrderBySeller', 1588790707383046144, 0, 3.00, 'house/sellOrderBySeller/index', 'sellOrderBySeller', '我的销售交易', 'md-analytics', 2, '', 0, NULL),
+	(1588804332646699008, 'admin', '2022-11-05 16:04:06', 0, NULL, NULL, NULL, 'leaseOrderBySeller', 1588790707383046144, 0, 4.00, 'house/leaseOrderBySeller/index', 'leaseOrderBySeller', '我的出租交易', 'md-archive', 2, '', 0, NULL),
+	(1588804513911934976, 'admin', '2022-11-05 16:04:49', 0, NULL, NULL, NULL, 'sellOrderByUser', 1588790211800862720, 0, 5.00, 'house/sellOrderByUser/index', 'sellOrderByUser', '我的销售交易', 'md-basketball', 2, '', 0, NULL),
+	(1588804589736562688, 'admin', '2022-11-05 16:05:07', 0, NULL, NULL, NULL, 'leaseOrderByUser', 1588790211800862720, 0, 6.00, 'house/leaseOrderByUser/index', 'leaseOrderByUser', '我的出租交易', 'ios-calculator', 2, '', 0, NULL),
+	(1588804735811588096, 'admin', '2022-11-05 16:05:42', 0, NULL, NULL, NULL, 'houseLease', 1588790012172963840, 0, 2.00, 'house/houseLease/index', 'houseLease', '房屋出租维护', 'ios-basket', 2, '', 0, NULL),
+	(1588805798111350784, 'admin', '2022-11-05 16:09:56', 0, NULL, NULL, NULL, 'customerSell', 1588790012172963840, 0, 3.00, 'house/customerSell/index', 'customerSell', '销售订单维护', 'md-analytics', 2, '', 0, NULL),
+	(1588805867338338304, 'admin', '2022-11-05 16:10:12', 0, NULL, NULL, NULL, 'customerLease', 1588790012172963840, 0, 4.00, 'house/customerLease/index', 'customerLease', '出租订单维护', 'md-appstore', 2, '', 0, NULL);
+
+DROP TABLE IF EXISTS `a_role`;
+CREATE TABLE IF NOT EXISTS `a_role` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `default_role` bit(1) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `data_type` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_role`;
+INSERT INTO `a_role` (`id`, `create_by`, `create_time`, `update_by`, `update_time`, `name`, `del_flag`, `default_role`, `description`, `data_type`) VALUES
+	(496138616573952, '', '2022-03-20 09:46:20', 'admin', '2022-03-20 09:46:20', 'ROLE_ADMIN', 0, NULL, '超级管理员', 0),
+	(496138616573953, '', '2022-03-20 09:46:20', 'admin', '2022-11-05 16:10:29', 'ROLE_USER', 0, b'1', '买家', 0),
+	(1588805978739052544, 'admin', '2022-11-05 16:10:39', 'admin', '2022-03-20 09:46:20', 'ROLE_SELLER', 0, b'1', '卖家', 0);
+
+DROP TABLE IF EXISTS `a_role_permission`;
+CREATE TABLE IF NOT EXISTS `a_role_permission` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `permission_id` bigint unsigned DEFAULT NULL,
+  `role_id` bigint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_role_permission`;
+INSERT INTO `a_role_permission` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `permission_id`, `role_id`) VALUES
+	(1464514325862551552, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 125909152017944576, 496138616573952),
+	(1464514325862551553, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464484663442673664, 496138616573952),
+	(1464514325862551554, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 5129710648430593, 496138616573952),
+	(1464514325862551563, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464485105081913345, 496138616573952),
+	(1464514325862551564, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 40238597734928384, 496138616573952),
+	(1464514325862551568, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 1464485485316542465, 496138616573952),
+	(1464514325862551569, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 56309618086776832, 496138616573952),
+	(1464514325862551583, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 5129710648430592, 496138616573952),
+	(1464514325862551584, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 5129710648430594, 496138616573952),
+	(1464514325862551590, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 5129710648430595, 496138616573952),
+	(1464514325862551594, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 39915540965232640, 496138616573952),
+	(1464514325862551595, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 41363147411427328, 496138616573952),
+	(1530689746903371801, 'admin', '2022-05-29 07:17:29', 0, NULL, NULL, 1530689520276738048, 496138616573952),
+	(1530689747004035072, 'admin', '2022-05-29 07:17:29', 0, NULL, NULL, 1530689602321518592, 496138616573952),
+	(1535166468671541252, 'admin', '2022-06-10 15:46:23', 0, NULL, NULL, 1535166254703316992, 496138616573952),
+	(1535166468684124160, 'admin', '2022-06-10 15:46:23', 0, NULL, NULL, 1535166438371889152, 496138616573952),
+	(1536600292156641281, 'admin', '2022-06-14 14:43:53', 0, NULL, NULL, 1536599942410407936, 496138616573952),
+	(1536600292173418496, 'admin', '2022-06-14 14:43:53', 0, NULL, NULL, 1536600125332393984, 496138616573952),
+	(1536600292186001408, 'admin', '2022-06-14 14:43:53', 0, NULL, NULL, 1536600268379131904, 496138616573952),
+	(1536604439178252292, 'admin', '2022-06-14 15:00:22', 0, NULL, NULL, 1536604417711804416, 496138616573952),
+	(1536606659718287364, 'admin', '2022-06-14 15:09:11', 0, NULL, NULL, 1536606273959759872, 496138616573952),
+	(1536606659730870272, 'admin', '2022-06-14 15:09:11', 0, NULL, NULL, 1536606372668510208, 496138616573952),
+	(1536606659735064576, 'admin', '2022-06-14 15:09:11', 0, NULL, NULL, 1536606464712511488, 496138616573952),
+	(1536606659743453184, 'admin', '2022-06-14 15:09:11', 0, NULL, NULL, 1536606550951596032, 496138616573952),
+	(1536606659751841792, 'admin', '2022-06-14 15:09:11', 0, NULL, NULL, 1536606637815631872, 496138616573952),
+	(1536875525769924610, 'admin', '2022-06-15 08:57:34', 0, NULL, NULL, 1536875505901506560, 496138616573952),
+	(1588806017410535433, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588788031622615040, 496138616573952),
+	(1588806017439895552, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588790012172963840, 496138616573952),
+	(1588806017452478464, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588790107618545664, 496138616573952),
+	(1588806017460867072, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588804735811588096, 496138616573952),
+	(1588806017469255680, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588805798111350784, 496138616573952),
+	(1588806017477644288, 'admin', '2022-11-05 16:10:48', 0, NULL, NULL, 1588805867338338304, 496138616573952),
+	(1588806073802952704, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588788031622615040, 496138616573953),
+	(1588806073815535616, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588790211800862720, 496138616573953),
+	(1588806073823924224, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588790321746153472, 496138616573953),
+	(1588806073836507136, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588790412640915456, 496138616573953),
+	(1588806073844895744, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588790562918633472, 496138616573953),
+	(1588806073849090048, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588790631667470336, 496138616573953),
+	(1588806073853284352, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588804513911934976, 496138616573953),
+	(1588806073857478656, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1588804589736562688, 496138616573953),
+	(1588806073865867264, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536599942410407936, 496138616573953),
+	(1588806073870061568, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536600125332393984, 496138616573953),
+	(1588806073874255872, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536600268379131904, 496138616573953),
+	(1588806073878450176, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536604417711804416, 496138616573953),
+	(1588806073882644480, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536606273959759872, 496138616573953),
+	(1588806073886838784, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536606372668510208, 496138616573953),
+	(1588806073891033088, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536606464712511488, 496138616573953),
+	(1588806073895227392, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536606550951596032, 496138616573953),
+	(1588806073903616000, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536606637815631872, 496138616573953),
+	(1588806073912004608, 'admin', '2022-11-05 16:11:01', 0, NULL, NULL, 1536875505901506560, 496138616573953),
+	(1588806122263941120, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588788031622615040, 1588805978739052544),
+	(1588806122272329728, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588790707383046144, 1588805978739052544),
+	(1588806122272329729, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588790791621447680, 1588805978739052544),
+	(1588806122280718336, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588790877353021440, 1588805978739052544),
+	(1588806122289106944, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588804266909372416, 1588805978739052544),
+	(1588806122293301248, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1588804332646699008, 1588805978739052544),
+	(1588806122301689856, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536599942410407936, 1588805978739052544),
+	(1588806122314272768, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536600125332393984, 1588805978739052544),
+	(1588806122322661376, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536600268379131904, 1588805978739052544),
+	(1588806122335244288, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536604417711804416, 1588805978739052544),
+	(1588806122339438592, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536606273959759872, 1588805978739052544),
+	(1588806122347827200, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536606372668510208, 1588805978739052544),
+	(1588806122352021504, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536606464712511488, 1588805978739052544),
+	(1588806122360410112, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536606550951596032, 1588805978739052544),
+	(1588806122368798720, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536606637815631872, 1588805978739052544),
+	(1588806122372993024, 'admin', '2022-11-05 16:11:13', 0, NULL, NULL, 1536875505901506560, 1588805978739052544);
+
+DROP TABLE IF EXISTS `a_setting`;
+CREATE TABLE IF NOT EXISTS `a_setting` (
+  `id` varchar(255) NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `value` longtext,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_setting`;
+INSERT INTO `a_setting` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `value`) VALUES
+	('FILE_HTTP', NULL, NULL, 0, 'admin', '2022-05-28 15:57:20', 'http://'),
+	('FILE_PATH', NULL, NULL, 0, 'admin', '2022-05-28 15:57:19', 'C:\\\\oa-file'),
+	('FILE_VIEW', NULL, NULL, 0, 'admin', '2022-05-28 15:57:20', '127.0.0.1:8080/zwz/file/view'),
+	('LOCAL_OSS', 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', '{"serviceName":"LOCAL_OSS","endpoint":"127.0.0.1:8080/zwz/file/view","http":"http://","filePath":"C:\\\\oa-file"}'),
+	('OSS_USED', 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 'LOCAL_OSS');
+
+DROP TABLE IF EXISTS `a_student`;
+CREATE TABLE IF NOT EXISTS `a_student` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `number` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `school` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `sex` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `age` decimal(19,2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_student`;
+INSERT INTO `a_student` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `name`, `number`, `school`, `sex`, `age`) VALUES
+	('1536601255475023872', 'admin', '2022-06-14 14:47:42.637000', 0, NULL, NULL, '张三', '001', '北京大学', '男', 18.00),
+	('1536601308352614400', 'admin', '2022-06-14 14:47:55.244000', 0, NULL, NULL, '李四', '002', '清华大学', '女', 19.00),
+	('1536601388044390400', 'admin', '2022-06-14 14:48:14.243000', 0, NULL, NULL, '王五', '003', '浙江大学', '男', 20.00),
+	('1536601469879455744', 'admin', '2022-06-14 14:48:33.753000', 0, NULL, NULL, '赵六', '004', '宁波大学', '保密', 21.00);
+
+DROP TABLE IF EXISTS `a_teacher`;
+CREATE TABLE IF NOT EXISTS `a_teacher` (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci NOT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `create_time` datetime(6) DEFAULT NULL,
+  `del_flag` int NOT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `update_time` datetime(6) DEFAULT NULL,
+  `age` decimal(19,2) DEFAULT NULL,
+  `autograph` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `education` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `graduated` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  `wages` decimal(19,2) DEFAULT NULL,
+  `resume` varchar(255) CHARACTER SET utf8 COLLATE utf8_croatian_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_croatian_ci;
+
+DELETE FROM `a_teacher`;
+INSERT INTO `a_teacher` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `age`, `autograph`, `education`, `graduated`, `name`, `remark`, `status`, `wages`, `resume`) VALUES
+	('1536614275123122176', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '博士', '同济大学', '张三', '测试', '在职', 9960.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424'),
+	('1536614275123122177', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '本科', '同济大学', '李四', '测试', '在职', 7778.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424'),
+	('1536614275123122178', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '硕士', '同济大学', '王五', '测试', '在职', 8889.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424'),
+	('1536614275123122179', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '硕士', '同济大学', '赵六', '测试', '在职', 4445.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424'),
+	('1536614275123122180', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '专科', '同济大学', '郑七', '测试', '在职', 1118.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424'),
+	('1536614275123122181', 'admin', '2022-06-14 15:39:26.000000', 0, 'admin', '2022-06-14 15:41:09.841000', 30.00, 'http://127.0.0.1:8080/zwz/file/view/1536614206311370752', '专科', '同济大学', '龚八', '测试', '在职', 3337.00, 'http://127.0.0.1:8080/zwz/file/view/1536614698903015424');
+
+DROP TABLE IF EXISTS `a_user`;
+CREATE TABLE IF NOT EXISTS `a_user` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `mobile` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `sex` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `type` int DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `department_id` bigint unsigned DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `pass_strength` varchar(2) DEFAULT NULL,
+  `department_title` varchar(255) DEFAULT NULL,
+  `birth` datetime(6) DEFAULT NULL,
+  `my_door` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`) USING BTREE,
+  UNIQUE KEY `email` (`email`) USING BTREE,
+  UNIQUE KEY `mobile` (`mobile`) USING BTREE,
+  KEY `create_time` (`create_time`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_user`;
+INSERT INTO `a_user` (`id`, `create_by`, `create_time`, `update_by`, `update_time`, `address`, `avatar`, `description`, `email`, `mobile`, `nickname`, `password`, `sex`, `status`, `type`, `username`, `del_flag`, `department_id`, `street`, `pass_strength`, `department_title`, `birth`, `my_door`) VALUES
+	(682265633886208, '', '2022-03-20 09:46:20', 'admin', '2022-05-18 14:41:08', '["330000","330600","330602"]', 'https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0', '北大', '916077357@qq.com', '17857054388', '管理员', '$2a$10$PS04ecXfknNd3V8d.ymLTObQciapMU4xU8.GADBZZsuTZr7ymnagy', '男', 0, 1, 'admin', 0, 1464487379074158593, '东西街道2', '弱', '设计研发部', '2000-01-08 00:00:00.000000', 'user-adminZWZ666department-admin'),
+	(1464764315201572865, '', '2022-03-20 09:46:20', 'admin', '2022-11-05 16:23:47', '', 'https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0', '', '17859654125@qq.com', '17859654125', '测试买家', '$2a$10$E59nactOiILAzQvfcs0JFOYuZp06d4bLhugEadyQuygpmiLc0W.ha', '女', 0, 0, '17859654125', 0, 1464487332064399361, '', '', '行政综合部', NULL, ''),
+	(1464772465946398721, '', '2022-03-20 09:46:20', 'admin', '2022-11-05 16:23:53', '["110000","110100","110105"]', 'https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0', '', '17859654121@qq.com', '17859654121', '测试卖家', '$2a$10$vJyLo1RhFORH/SAu3sc9aeb37I5JRy5UugaN7fIt/e2vvsz6JWJCm', '女', 0, 0, '17859654121', 0, 1464487432169852929, '', '', '综合发展部', NULL, ''),
+	(1527830053524738048, 'admin', '2022-05-21 09:54:05', 'admin', '2022-11-05 16:23:25', '["110000","110100","110106"]', 'https://wx.qlogo.cn/mmhead/PiajxSqBRaEKjc639z2lRF4DqweNw2aDRLbAL7yLlSgrdZeKBCwLHDQ/0', NULL, 'user4@qq.com', '17896525487', 'user4', '$2a$10$oeP4aplYnswfQ44pK6lAO.Np9BuPYJGRwo17THO7CUNlIQoVGsPmy', '男', -1, 0, 'user4', 0, 1464487332064399361, NULL, '弱', '行政综合部', NULL, NULL);
+
+DROP TABLE IF EXISTS `a_user_role`;
+CREATE TABLE IF NOT EXISTS `a_user_role` (
+  `id` bigint unsigned NOT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `del_flag` tinyint(1) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `role_id` bigint unsigned DEFAULT NULL,
+  `user_id` bigint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+DELETE FROM `a_user_role`;
+INSERT INTO `a_user_role` (`id`, `create_by`, `create_time`, `del_flag`, `update_by`, `update_time`, `role_id`, `user_id`) VALUES
+	(1464487931975700480, 'admin', '2022-03-20 09:46:20', 0, 'admin', '2022-03-20 09:46:20', 496138616573952, 682265633886208),
+	(1526802492967489537, NULL, '2022-05-18 13:50:56', 0, NULL, NULL, 496138616573953, 1526802492443201536),
+	(1526819095553642497, NULL, '2022-05-18 14:56:54', 0, NULL, NULL, 496138616573953, 1526819095159377920),
+	(1527830053889642496, 'admin', '2022-05-21 09:54:05', 0, NULL, NULL, 496138616573952, 1527830053524738048),
+	(1588809286815977472, 'admin', '2022-11-05 16:23:47', 0, NULL, NULL, 496138616573953, 1464764315201572865),
+	(1588809309658157056, 'admin', '2022-11-05 16:23:53', 0, NULL, NULL, 1588805978739052544, 1464772465946398721);
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

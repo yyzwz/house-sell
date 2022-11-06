@@ -3,23 +3,20 @@
 </style>
 
 <template>
-  <div
-    :style="{ background: bgColor }"
-    :class="`shrinkable-menu ${theme}-menu`"
-  >
+  <div :style="{background: bgColor}" class="ivu-shrinkable-menu">
     <slot name="top"></slot>
     <sidebar-menu
       v-show="!shrink"
-      :theme="theme"
+      :menu-theme="theme"
       :menu-list="menuList"
       :open-names="openNames"
       @on-change="handleChange"
     ></sidebar-menu>
     <sidebar-menu-shrink
       v-show="shrink"
-      :theme="theme"
+      :menu-theme="theme"
       :menu-list="menuList"
-      :open-names="openNames"
+      :icon-color="shrinkIconColor"
       @on-change="handleChange"
     ></sidebar-menu-shrink>
   </div>
@@ -28,45 +25,43 @@
 <script>
 import sidebarMenu from "./components/sidebarMenu.vue";
 import sidebarMenuShrink from "./components/sidebarMenuShrink.vue";
+import util from "@/libs/util";
 export default {
   name: "shrinkableMenu",
   components: {
     sidebarMenu,
-    sidebarMenuShrink,
+    sidebarMenuShrink
   },
   props: {
     shrink: {
       type: Boolean,
-      default: false,
+      default: false
     },
     menuList: {
       type: Array,
-      required: true,
+      required: true
     },
     theme: {
       type: String,
-      default: "darkblue",
+      default: "dark",
+      validator(val) {
+        return util.oneOf(val, ["dark", "light"]);
+      }
     },
     beforePush: {
-      type: Function,
+      type: Function
     },
-  },
-  data() {
-    return {
-      openNames: [],
-    };
+    openNames: {
+      type: Array
+    }
   },
   computed: {
     bgColor() {
-      if (this.theme == "darkblue") {
-        return "#17233d";
-      } else if (this.theme == "dark") {
-        return "#515a6e";
-      } else if (this.theme == "black") {
-        return "#1f1f1f";
-      }
-      return "#fff";
+      return "#323232";
     },
+    shrinkIconColor() {
+      return this.theme == "dark" ? "#fff" : "#515a6e";
+    }
   },
   methods: {
     handleChange(name) {
@@ -76,25 +71,13 @@ export default {
           willpush = false;
         }
       }
-      if (name == this.$route.name) {
-        willpush = false;
-      }
       if (willpush) {
         this.$router.push({
-          name: name,
+          name: name
         });
       }
       this.$emit("on-change", name);
-    },
-  },
-  watch: {
-    // 监听路由变化
-    $route(to, from) {
-      this.openNames = [this.$route.matched[0].name];
-    },
-  },
-  mounted() {
-    this.openNames = [this.$route.matched[0].name];
-  },
+    }
+  }
 };
 </script>

@@ -7,16 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="xboot-plus" />
+        <module name="house-sell" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="xboot-plus" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="xboot-plus" options="-parameters" />
+      <module name="house-sell" options="-parameters" />
     </option>
   </component>
 </project>
